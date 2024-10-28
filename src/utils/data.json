@@ -1,0 +1,37 @@
+[
+    {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "title": "Design the homepage",
+        "description": "Create the initial design for the homepage including the layout and color scheme.",
+        "status": "To Do",
+        "priority": "High"
+    },
+    {
+        "id": "550e8400-e29b-41d4-a716-446655440001",
+        "title": "Set up project repository",
+        "description": "Initialize the project repository on GitHub and set up the basic project structure.",
+        "status": "In Progress",
+        "priority": "Medium"
+    },
+    {
+        "id": "550e8400-e29b-41d4-a716-446655440002",
+        "title": "Implement authentication",
+        "description": "Develop the authentication module including login, registration, and password recovery.",
+        "status": "To Do",
+        "priority": "High"
+    },
+    {
+        "id": "550e8400-e29b-41d4-a716-446655440003",
+        "title": "Create task management API",
+        "description": "Build the backend API for managing tasks including CRUD operations.",
+        "status": "In Progress",
+        "priority": "High"
+    },
+    {
+        "id": "550e8400-e29b-41d4-a716-446655440004",
+        "title": "Write unit tests",
+        "description": "Write unit tests for the authentication and task management modules.",
+        "status": "Done",
+        "priority": "Low"
+    }
+]
