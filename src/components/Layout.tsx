@@ -1,13 +1,11 @@
-import SwitchDarkMode from "./SwitchDarkMode";
+import Navbar from "./Navbar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <nav style={{ height: "74px" }}>
-        <SwitchDarkMode />
-      </nav>
+      <Navbar />
       {children}
-      <footer>Footer</footer>
+      {/* <footer className="h-">Footer</footer> */}
     </>
   );
 };

@@ -1,16 +1,20 @@
-"use client";
-import { useThemeContext } from "@/context/ThemeContext";
+'use client';
+import { useThemeContext } from '@/context/ThemeContext';
+import { CiDark, CiLight } from 'react-icons/ci';
 
 const SwitchDarkMode = () => {
-  const { switchDarkMode } = useThemeContext();
+  const { switchDarkMode, darkMode } = useThemeContext();
 
   return (
     <button
-      onClick={() => {
-        switchDarkMode();
-      }}
+      onClick={switchDarkMode}
+      className="w-16 h-16 flex items-center justify-center"
     >
-      SwitchDarkMode
+      {darkMode ? (
+        <CiLight size={32} color="#FFF" />
+      ) : (
+        <CiDark size={32} color="#FFF" />
+      )}
     </button>
   );
 };

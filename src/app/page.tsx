@@ -50,22 +50,19 @@ export default function Home() {
     setTasks(updatedTasks);
   };
 
-  const filterDone = () => {
-    const filteredTasks = tasks.filter((task) => {
-      return task.status.toLowerCase() === "done";
-    });
+  // const filterDone = () => {
+  //   const filteredTasks = tasks.filter((task) => {
+  //     return task.status.toLowerCase() === "done";
+  //   });
 
-    console.log("Filtered tasks:", filteredTasks);
-  };
+  //   console.log("Filtered tasks:", filteredTasks);
+  // };
 
   return (
     <div>
-      <h2>Tasks</h2>
-      <button onClick={filterDone}>Show Done</button>
-      <button>Show All</button>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+      <h2 className="text-3xl font-bold underline">Tasks</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+        <div id="todo-column" className="flex flex-col gap-3">
           {tasks.map((task) => {
             return (
               <Task key={task.id} task={task} onDelete={handleDeleteTask} />
@@ -73,7 +70,7 @@ export default function Home() {
           })}
           <form
             onSubmit={handleOnAddTask}
-            style={{ display: "flex", flexDirection: "column", width: "300px" }}
+            style={{ display: 'flex', flexDirection: 'column', width: '300px' }}
           >
             <label>Title</label>
             <input
@@ -91,7 +88,7 @@ export default function Home() {
                 setDescription(e.target.value);
               }}
             />
-            <button type="submit">Add New</button>
+            <button type="submit" className="border-2 border-red-400 rounded-md hover:border-blue-500">Add New</button>
           </form>
         </div>
       </div>
