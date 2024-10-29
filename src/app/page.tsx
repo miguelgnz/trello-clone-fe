@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { FormEvent, useEffect, useState } from "react";
-import { TaskType } from "@/utils/types";
-import Task from "@/components/Task";
+import { FormEvent, useEffect, useState } from 'react';
+import { TaskType } from '@/utils/types';
+import Task from '@/components/Task';
+import { Button, Input } from '@nextui-org/react';
 
-import { fetchTasks, postTask } from "@/services/tasks";
+import { fetchTasks, postTask } from '@/services/tasks';
 
 export default function Home() {
   const [tasks, setTasks] = useState<TaskType[]>([]);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   //Get tasks initial data
   useEffect(() => {
@@ -60,9 +61,13 @@ export default function Home() {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold underline">Tasks</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-        <div id="todo-column" className="flex flex-col gap-3">
+      <h1 className="text-3xl font-bold underline">Tasks</h1>
+      <div className="grid grid-cols-3 gap-4 p-4">
+        <div
+          id="todo-column"
+          className="flex flex-col gap-3 p-4 bg-black rounded-xl"
+        >
+          <h2 className="text-white">Todo</h2>
           {tasks.map((task) => {
             return (
               <Task key={task.id} task={task} onDelete={handleDeleteTask} />
@@ -72,25 +77,45 @@ export default function Home() {
             onSubmit={handleOnAddTask}
             style={{ display: 'flex', flexDirection: 'column', width: '300px' }}
           >
-            <label>Title</label>
-            <input
+            <label className="text-white">Title</label>
+            <Input
               name="title"
               type="text"
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
             />
-            <label>Description</label>
-            <input
+            <label className="text-white">Description</label>
+            <Input
               name="description"
               type="text"
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
-            <button type="submit" className="border-2 border-red-400 rounded-md hover:border-blue-500">Add New</button>
+            <Button
+              type="submit"
+              className="border-2 border-red-400 rounded-md hover:border-blue-500"
+            >
+              Add New
+            </Button>
           </form>
         </div>
+
+        <div
+          id="in-progress-column"
+          className="flex flex-col gap-3 p-4 bg-black rounded-lg"
+        >
+          in-progress
+        </div>
+        <div
+          id="done-column"
+          className="flex flex-col gap-3 p-4 bg-black rounded-lg"
+        >
+          Done
+        </div>
+
+        
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
-"use client";
-import { TaskType } from "@/utils/types";
+'use client';
+import { TaskType } from '@/utils/types';
+import { Button } from '@nextui-org/react';
+import { FaRegTrashAlt } from 'react-icons/fa';
 
 interface Props {
   task: TaskType;
@@ -8,29 +10,18 @@ interface Props {
 
 const Task = (props: Props) => {
   return (
-    <div
-      style={{
-        border: "1px solid",
-        borderRadius: "16px",
-        width: "300px",
-        padding: "12px",
-      }}
-    >
-      <h3>{props.task.title}</h3>
-      <p>{props.task.description}</p>
-      <p>{props.task.status}</p>
-      <button
+    <div className="bg-zinc-800 p-4 rounded-xl">
+      <h3 className="text-white text-lg">{props.task.title}</h3>
+      <p className="text-white">{props.task.description}</p>
+      <p className="text-white">{props.task.status}</p>
+      <Button
+        isIconOnly
         onClick={() => {
           props.onDelete(props.task);
         }}
       >
-        Delete
-      </button>
-      <select>
-        <option value="done">Done</option>
-        <option value="in-progress">In Progress</option>
-        <option value="todo">Todo</option>
-      </select>
+        <FaRegTrashAlt />
+      </Button>
     </div>
   );
 };
