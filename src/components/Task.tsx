@@ -10,12 +10,14 @@ interface Props {
 
 const Task = (props: Props) => {
   return (
-    <div className="bg-zinc-800 p-4 rounded-xl">
-      <h3 className="text-white text-lg">{props.task.title}</h3>
-      <p className="text-white">{props.task.description}</p>
-      <p className="text-white">{props.task.status}</p>
+    <div className="bg-task p-4 rounded-xl">
+      {/* <h3 className="text-taskText text-lg">{props.task.title}</h3> */}
+      <p className="text-taskText text-sm font-normal">{props.task.description}</p>
+      {/* <p className="text-taskText">{props.task.status}</p> */}
       <Button
+        className='text-taskText'
         isIconOnly
+        variant='light'
         onClick={() => {
           props.onDelete(props.task);
         }}

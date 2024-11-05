@@ -11,6 +11,13 @@ export const content = [
   './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
 ];
 export const theme = {
+  colors: {
+    column: '#101204',
+    task: '#22272b',
+    taskText: '#a6b2be',
+    white: '#ffffff',
+    navbar: '#1d2125',
+  },
   extend: {},
 };
 export const darkMode = 'class';
