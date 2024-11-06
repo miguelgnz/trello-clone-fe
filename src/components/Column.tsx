@@ -1,15 +1,25 @@
+import { ColumnType, TaskType } from '@/utils/types';
 import AddCardButton from './AddCardButton';
+import Task from '@/components/Task';
+import { useDroppable } from '@dnd-kit/core';
 
 interface ColumnProps {
-  title: string;
-  children: React.ReactNode;
+  tasks: TaskType[];
+  column: ColumnType;
 }
 
-export default function Column({ title, children }: ColumnProps) {
+export default function Column({ column, tasks }: ColumnProps) {
+  const { setNodeRef } = useDroppable({
+    id: column.id,
+  });
   return (
-    <div className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min min-h-36">
-      <h2 className="text-white font-sans text-sm font-semibold">{title}</h2>
-      {children}
+    <div className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min min-h-36" ref={setNodeRef}>
+      <h2 className="text-white font-sans text-sm font-semibold">
+        {column.title}
+      </h2>
+      {tasks.map((task) => {
+        return <Task key={task.id} task={task} />;
+      })}
       <AddCardButton />
     </div>
   );

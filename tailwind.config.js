@@ -14,7 +14,7 @@ export const theme = {
   colors: {
     column: '#101204',
     task: '#22272b',
-    taskText: '#a6b2be',
+    taskText: '#b6c2cf',
     white: '#ffffff',
     navbar: '#1d2125',
   },
