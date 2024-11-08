@@ -1,9 +1,9 @@
-import Navbar from "./Navbar";
+import CustomNavbar from "./CustomNavbar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <Navbar />
+      <CustomNavbar />
       {children}
       {/* <footer className="h-">Footer</footer> */}
     </>

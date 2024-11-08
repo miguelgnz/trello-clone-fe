@@ -27,12 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={''}>
-          <ThemeContextProvider>
-        <NextUIProvider>
+      <body>
+        <ThemeContextProvider>
+          <NextUIProvider>
             <Layout>{children}</Layout>
-        </NextUIProvider>
-          </ThemeContextProvider>
+          </NextUIProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   );

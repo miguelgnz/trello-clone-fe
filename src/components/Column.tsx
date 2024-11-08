@@ -13,7 +13,10 @@ export default function Column({ column, tasks }: ColumnProps) {
     id: column.id,
   });
   return (
-    <div className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min min-h-36" ref={setNodeRef}>
+    <div
+      className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min min-h-36"
+      ref={setNodeRef}
+    >
       <h2 className="text-white font-sans text-sm font-semibold">
         {column.title}
       </h2>

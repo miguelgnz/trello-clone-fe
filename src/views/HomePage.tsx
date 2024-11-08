@@ -49,6 +49,14 @@ const COLUMNS: ColumnType[] = [
 export default function HomePage() {
   const [tasks, setTasks] = useState<TaskType[]>(INITIAL_DATA);
 
+  const gridStyles = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, minmax(280px, 1fr))',
+    gap: '4px',
+    padding: '4px',
+    overflowX: 'auto',
+  };
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
@@ -71,20 +79,22 @@ export default function HomePage() {
   }
 
   return (
-    <div>
-      <div className="grid grid-cols-3 gap-4 p-4">
-        <DndContext onDragEnd={handleDragEnd}>
-          {COLUMNS.map((column) => {
-            return (
-              <Column
-                key={column.id}
-                column={column}
-                tasks={tasks.filter((task) => task.status === column.id)}
-              />
-            );
-          })}
-        </DndContext>
-      </div>
+    <div
+      // className="grid grid-cols-3 gap-4 p-4 min-w-full overflow-x-auto"
+      style={gridStyles}
+      id="main-grid"
+    >
+      <DndContext onDragEnd={handleDragEnd}>
+        {COLUMNS.map((column) => {
+          return (
+            <Column
+              key={column.id}
+              column={column}
+              tasks={tasks.filter((task) => task.status === column.id)}
+            />
+          );
+        })}
+      </DndContext>
     </div>
   );
 }
