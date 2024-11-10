@@ -19,7 +19,6 @@ export const ThemeContextProvider = ({
   const [darkMode, setDarkMode] = useState(false);
 
   const switchDarkMode = () => {
-      console.log("dark mode is", darkMode);
     setDarkMode(!darkMode);
   };
 

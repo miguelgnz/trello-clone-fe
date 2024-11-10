@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Layout from '@/components/Layout';
 import { ThemeContextProvider } from '@/context/ThemeContext';
+import { TasksContextProvider } from '@/context/TasksContext';
 import { NextUIProvider } from '@nextui-org/react';
 
 // const geistSans = localFont({
@@ -29,9 +30,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeContextProvider>
-          <NextUIProvider>
-            <Layout>{children}</Layout>
-          </NextUIProvider>
+          <TasksContextProvider>
+            <NextUIProvider>
+              <Layout>{children}</Layout>
+            </NextUIProvider>
+          </TasksContextProvider>
         </ThemeContextProvider>
       </body>
     </html>

@@ -23,7 +23,7 @@ const Task = (props: Props) => {
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      className="bg-task p-4 rounded-xl"
+      className="bg-task p-4 rounded-xl z-10"
       style={style}
     >
       {/* <h3 className="text-taskText text-lg">{props.task.title}</h3> */}
