@@ -15,32 +15,30 @@ const Task = (props: Props) => {
   });
 
   const style = {
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
-  }
+    transform: transform
+      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      : undefined,
+  };
 
   return (
     <div
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      className="bg-task p-4 rounded-xl z-10"
+      className="bg-task p-4 rounded-xl z-[2]"
       style={style}
     >
-      {/* <h3 className="text-taskText text-lg">{props.task.title}</h3> */}
-      <p className="text-taskText text-sm font-normal">
-        {props.task.description}
-      </p>
-      {/* <p className="text-taskText">{props.task.status}</p> */}
-      <Button
-        className="text-taskText"
-        isIconOnly
-        variant="light"
-        onClick={() => {
-          // props.onDelete(props.task);
-        }}
-      >
-        <FaRegTrashAlt />
-      </Button>
+      <p className="text-taskText text-sm font-normal">{props.task.title}</p>
+      <div className='flex flex-row justify-end'>
+        <Button
+          className="text-taskText"
+          isIconOnly
+          variant="light"
+          onClick={() => {}}
+        >
+          <FaRegTrashAlt />
+        </Button>
+      </div>
     </div>
   );
 };

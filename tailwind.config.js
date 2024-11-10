@@ -16,7 +16,8 @@ export const theme = {
     task: '#22272b',
     taskText: '#b6c2cf',
     white: '#ffffff',
-    navbar: '#1d2125',
+    navbar: '#0000003d',
+    secondaryBtn: '#0c66e4',
   },
   extend: {},
 };

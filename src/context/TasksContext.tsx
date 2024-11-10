@@ -4,14 +4,14 @@ import { createContext, useContext, useState } from 'react';
 
 interface ContextType {
   tasks: TaskType[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
   setTasksOnDragEvent: (taskId: string, newStatus: TaskStatus) => void;
+  addTask: (newTask: TaskType) => void;
 }
 
 const ctx: ContextType = {
   tasks: [],
-  setTasks: () => {},
   setTasksOnDragEvent: () => {},
+  addTask: () => {},
 };
 
 export const TasksContext = createContext(ctx);
@@ -55,10 +55,14 @@ export const TasksContextProvider = ({
     );
   };
 
+  const addTask = (newTask: TaskType) => {
+    setTasks((prevState) => [...prevState, newTask]);
+  };
+
   const value = {
     tasks,
-    setTasks,
     setTasksOnDragEvent,
+    addTask,
   };
 
   return (

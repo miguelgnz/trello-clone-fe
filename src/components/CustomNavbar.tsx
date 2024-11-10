@@ -4,8 +4,8 @@ import { BsTrello } from 'react-icons/bs';
 
 const CustomNavbar = () => {
   return (
-    <Navbar>
-      <NavbarBrand className='flex flex-row items-center gap-2'>
+    <Navbar className='bg-navbar'>
+      <NavbarBrand className='flex flex-row items-center gap-2 text-white'>
         <BsTrello />
         <p className="font-bold text-inherit">TRELLO</p>
       </NavbarBrand>

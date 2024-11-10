@@ -28,7 +28,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="grid grid-cols-[repeat(3,_minmax(280px,_1fr))] gap-4 p-4 min-w-full overflow-x-auto"
+      className="grid grid-cols-[repeat(3,_minmax(280px,_312px))] gap-4 p-4 min-w-full overflow-x-auto"
       id="main-grid"
     >
       <DndContext onDragEnd={handleDragEnd}>

@@ -9,6 +9,6 @@ export interface TaskType {
 }
 
 export interface ColumnType {
-  id: string;
+  id: TaskStatus;
   title: string;
 }
