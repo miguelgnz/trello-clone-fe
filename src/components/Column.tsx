@@ -31,7 +31,9 @@ export default function Column({ column, tasks }: ColumnProps) {
       {tasks.map((task) => {
         return <Task key={task.id} task={task} />;
       })}
-      {isInputVisible && <AddTaskForm setIsInputVisible={setIsInputVisible} column={column}/>}
+      {isInputVisible && (
+        <AddTaskForm setIsInputVisible={setIsInputVisible} column={column} />
+      )}
       {!isInputVisible && (
         <Button
           className="text-taskText"

@@ -7,6 +7,7 @@ interface ContextType {
   setTasksOnDragEvent: (taskId: string, newStatus: TaskStatus) => void;
   addTask: (newTask: TaskType) => void;
   deleteTask: (taskId: string) => void;
+  updateDescription: (taskId: string, newDescription: string) => void;
 }
 
 const ctx: ContextType = {
@@ -14,6 +15,7 @@ const ctx: ContextType = {
   setTasksOnDragEvent: () => {},
   addTask: () => {},
   deleteTask: () => {},
+  updateDescription: () => {},
 };
 
 export const TasksContext = createContext(ctx);
@@ -29,8 +31,16 @@ export const TasksContextProvider = ({
     {
       id: '550e8400-e29b-41d4-a716-446655440000',
       title: 'Finish Trello Clone project',
+      description: '',
+      status: 'TODO',
+      priority: 'High',
+    },
+    {
+      id: '550e8400-e29b-41d4-a716-446655440030',
+      title:
+        'Ribeye pork boudin meatloaf, prosciutto tenderloin frankfurter ground round pastrami kielbasa chuck',
       description:
-        'Create the initial design for the homepage including the layout and color scheme.',
+        'Chislic tenderloin sirloin, landjaeger bacon jerky buffalo. Capicola ground round ham beef ribs meatball, hamburger kevin burgdoggen salami jowl pork loin pork belly venison. Shank pork loin frankfurter tenderloin tri-tip ground round. Prosciutto meatloaf t-bone drumstick shoulder turducken chuck picanha kielbasa swine. Cupim leberkas ham hock shoulder jowl biltong pork',
       status: 'TODO',
       priority: 'High',
     },
@@ -57,11 +67,25 @@ export const TasksContextProvider = ({
     setTasks((prevState) => prevState.filter((task) => task.id !== taskId));
   };
 
+  const updateDescription = (taskId: string, newDescription: string) => {
+    setTasks((prevState) =>
+      prevState.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              description: newDescription,
+            }
+          : task
+      )
+    );
+  };
+
   const value = {
     tasks,
     setTasksOnDragEvent,
     addTask,
     deleteTask,
+    updateDescription,
   };
 
   return (
