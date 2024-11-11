@@ -35,7 +35,7 @@ export default function AddTaskForm({
   return (
     <>
       <form
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-3 "
         onSubmit={(e) => {
           e.preventDefault();
           onClickAddCard();
@@ -43,13 +43,20 @@ export default function AddTaskForm({
       >
         <Input
           autoFocus
-          required
-          value={userInput}
-          className="bg-column"
-          placeholder="Enter a title or paste a link"
+          classNames={{
+            inputWrapper: [
+              'bg-task',
+              'group-data-[focus=true]:bg-task',
+              'group-data-[hover=true]:bg-task',
+            ],
+            input: ['placeholder:text-default-700/50', 'group-data-[has-value=true]:text-taskText', 'cursor-text'],
+          }}
           size="md"
           radius="sm"
+          required
           fullWidth
+          placeholder="Enter a title or paste a link"
+          value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
         />
         <div className="flex flex-row items-center gap-1">

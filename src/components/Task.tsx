@@ -5,7 +5,7 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { useTasksContext } from '@/context/TasksContext';
 
-import { Button, useDisclosure } from '@nextui-org/react';
+import { Button, Tooltip, useDisclosure } from '@nextui-org/react';
 
 import TaskModal from './TaskModal';
 
@@ -35,7 +35,7 @@ const Task = (props: Props) => {
         ref={setNodeRef}
         {...attributes}
         {...listeners}
-        className="bg-task p-4 rounded-xl z-[2] hover:border-2 border-secondaryBtn"
+        className="bg-task p-4 rounded-xl z-[2] hover:border-1 border-secondaryBtn"
         style={style}
       >
         <div className="flex flex-col gap-2">
@@ -45,7 +45,11 @@ const Task = (props: Props) => {
               : props.task.title}
           </p>
           {props.task.description && (
-            <GrTextAlignFull size={13} className="text-taskText" />
+            <Tooltip content="This task has a description" size="sm" radius='sm'>
+              <div className="w-fit">
+                <GrTextAlignFull size={13} className="text-taskText" />
+              </div>
+            </Tooltip>
           )}
         </div>
         <div className="flex flex-row justify-end">

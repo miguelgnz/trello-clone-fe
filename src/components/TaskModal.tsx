@@ -55,17 +55,25 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                     required
                     placeholder="Add a more detailed description"
                     className="w-full"
+                    classNames={{
+                      inputWrapper: [
+                        'bg-task',
+                        'group-data-[focus=true]:bg-task',
+                        'group-data-[hover=true]:bg-task',
+                      ],
+                      input: ['text-taskText'],
+                    }}
+                    radius="sm"
                     onChange={(e) => setTaskDescription(e.target.value)}
+                    value={taskDescription}
                   />
                   <div className="flex flex-row gap-2">
                     <Button
+                      radius="sm"
                       type="submit"
                       className="bg-secondaryBtn text-taskText"
                     >
                       Save
-                    </Button>
-                    <Button variant="light" className="text-taskText">
-                      Cancel
                     </Button>
                   </div>
                 </form>
@@ -74,11 +82,7 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
               )}
             </ModalBody>
             <ModalFooter>
-              <Button
-                variant="light"
-                color="danger"
-                onClick={onClose}
-              >
+              <Button variant="light" color="danger" onClick={onClose}>
                 Close
               </Button>
             </ModalFooter>
