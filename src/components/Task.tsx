@@ -3,6 +3,7 @@ import { TaskType } from '@/utils/types';
 import { useDraggable } from '@dnd-kit/core';
 import { Button } from '@nextui-org/react';
 import { FaRegTrashAlt } from 'react-icons/fa';
+import { useTasksContext } from '@/context/TasksContext';
 
 interface Props {
   task: TaskType;
@@ -13,6 +14,8 @@ const Task = (props: Props) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.task.id,
   });
+
+  const { deleteTask } = useTasksContext();
 
   const style = {
     transform: transform
@@ -25,16 +28,22 @@ const Task = (props: Props) => {
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      className="bg-task p-4 rounded-xl z-[2]"
+      className="bg-task p-4 rounded-xl z-[2] hover:border-2 border-secondaryBtn"
       style={style}
     >
-      <p className="text-taskText text-sm font-normal">{props.task.title}</p>
-      <div className='flex flex-row justify-end'>
+      <p className="text-taskText text-sm font-normal">
+        {props.task.title.length > 280
+          ? `${props.task.title.slice(0, 280)}...`
+          : props.task.title}
+      </p>
+      <div className="flex flex-row justify-end">
         <Button
           className="text-taskText"
           isIconOnly
           variant="light"
-          onClick={() => {}}
+          onClick={() => {
+            deleteTask(props.task.id);
+          }}
         >
           <FaRegTrashAlt />
         </Button>

@@ -20,8 +20,6 @@ export default function AddTaskForm({
   const { addTask } = useTasksContext();
 
   const onClickAddCard = () => {
-    console.log('Is it enterin here');
-    console.log('User input:', userInput);
     const newTask: TaskType = {
       id: crypto.randomUUID(),
       title: userInput,
@@ -49,7 +47,7 @@ export default function AddTaskForm({
           value={userInput}
           className="bg-column"
           placeholder="Enter a title or paste a link"
-          size="lg"
+          size="md"
           radius="sm"
           fullWidth
           onChange={(e) => setUserInput(e.target.value)}

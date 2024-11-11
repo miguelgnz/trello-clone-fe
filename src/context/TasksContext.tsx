@@ -6,12 +6,14 @@ interface ContextType {
   tasks: TaskType[];
   setTasksOnDragEvent: (taskId: string, newStatus: TaskStatus) => void;
   addTask: (newTask: TaskType) => void;
+  deleteTask: (taskId: string) => void;
 }
 
 const ctx: ContextType = {
   tasks: [],
   setTasksOnDragEvent: () => {},
   addTask: () => {},
+  deleteTask: () => {},
 };
 
 export const TasksContext = createContext(ctx);
@@ -32,14 +34,6 @@ export const TasksContextProvider = ({
       status: 'TODO',
       priority: 'High',
     },
-    {
-      id: '550e8400-e29b-41d4-a716-446655440001',
-      title: 'Set up project repository',
-      description:
-        'Initialize the project repository on GitHub and set up the basic project structure.',
-      status: 'IN_PROGRESS',
-      priority: 'Medium',
-    },
   ]);
 
   const setTasksOnDragEvent = (taskId: string, newStatus: TaskStatus) => {
@@ -59,10 +53,15 @@ export const TasksContextProvider = ({
     setTasks((prevState) => [...prevState, newTask]);
   };
 
+  const deleteTask = (taskId: string) => {
+    setTasks((prevState) => prevState.filter((task) => task.id !== taskId));
+  };
+
   const value = {
     tasks,
     setTasksOnDragEvent,
     addTask,
+    deleteTask,
   };
 
   return (
