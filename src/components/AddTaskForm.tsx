@@ -5,6 +5,7 @@ import { Button, Input } from '@nextui-org/react';
 import { MdOutlineClose } from 'react-icons/md';
 import { ColumnType, TaskType } from '@/utils/types';
 import { useTasksContext } from '@/context/TasksContext';
+import { constants } from '@/utils/constants';
 
 interface AddTaskFormProps {
   setIsInputVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +17,8 @@ export default function AddTaskForm({
   column,
 }: AddTaskFormProps) {
   const [userInput, setUserInput] = useState<string>('');
+
+  const { customInputClasses } = constants;
 
   const { addTask } = useTasksContext();
 
@@ -43,14 +46,7 @@ export default function AddTaskForm({
       >
         <Input
           autoFocus
-          classNames={{
-            inputWrapper: [
-              'bg-task',
-              'group-data-[focus=true]:bg-task',
-              'group-data-[hover=true]:bg-task',
-            ],
-            input: ['placeholder:text-default-700/50', 'group-data-[has-value=true]:text-taskText', 'cursor-text'],
-          }}
+          classNames={customInputClasses}
           size="md"
           radius="sm"
           required
