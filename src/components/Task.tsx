@@ -63,25 +63,32 @@ const Task = (props: Props) => {
         </div>
         <div className="flex flex-row justify-end">
           {isHovered && (
-            <Button
-              className="text-taskText"
-              isIconOnly
-              variant="light"
-              onClick={() => {}}
-            >
-              <MdOutlineEdit />
-            </Button>
+            <>
+              <Tooltip content="Edit title" size="sm" radius="sm">
+                <Button
+                  className="text-taskText"
+                  isIconOnly
+                  variant="light"
+                  onClick={() => {}}
+                >
+                  <MdOutlineEdit />
+                </Button>
+              </Tooltip>
+              <Tooltip content="Delete task" size="sm" radius="sm">
+                <Button
+                  className="text-danger"
+                  color="danger"
+                  isIconOnly
+                  variant="light"
+                  onClick={() => {
+                    deleteTask(props.task.id);
+                  }}
+                >
+                  <FaRegTrashAlt />
+                </Button>
+              </Tooltip>
+            </>
           )}
-          <Button
-            className="text-taskText"
-            isIconOnly
-            variant="light"
-            onClick={() => {
-              deleteTask(props.task.id);
-            }}
-          >
-            <FaRegTrashAlt />
-          </Button>
         </div>
       </div>
       <TaskModal

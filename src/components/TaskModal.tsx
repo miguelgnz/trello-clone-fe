@@ -6,13 +6,13 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Textarea,
   Button,
   ModalFooter,
 } from '@nextui-org/react';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { FaPager } from 'react-icons/fa';
 import { useTasksContext } from '@/context/TasksContext';
+import TaskDescriptionForm from './TaskDescriptionForm';
 
 interface ModalProps {
   task: TaskType;
@@ -56,65 +56,36 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                   <GrTextAlignFull size={17} className="mt-1" />
                   <h3 className="text-lg font-semibold">Description</h3>
                 </div>
-                {!isEditing && (
-                  <Button
-                    variant="light"
-                    size="sm"
-                    className="text-taskText rounded-sm bg-[#e2e6ee0f]"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    Edit
-                  </Button>
-                )}
-              </div>
-              {!task.description.length ? (
-                <form
-                  className="flex flex-col gap-2"
-                  onSubmit={handleOnSubmitDescription}
-                >
-                  <Textarea
-                    required
-                    placeholder="Add a more detailed description"
-                    className="w-full"
-                    radius="sm"
-                    onChange={(e) => setTaskDescription(e.target.value)}
-                    value={taskDescription || task.description}
-                  />
-                  <div className="flex flex-row gap-2">
+                {!task.description.length ||
+                  (!isEditing && (
                     <Button
-                      radius="sm"
-                      type="submit"
-                      className="bg-secondaryBtn text-taskText"
+                      variant="light"
+                      size="sm"
+                      className="text-taskText rounded-sm bg-[#e2e6ee0f]"
+                      onClick={() => setIsEditing(true)}
                     >
-                      Save
+                      Edit
                     </Button>
-                  </div>
-                </form>
+                  ))}
+              </div>
+
+              {/* FIX BEHAVIOR */}
+              {!task.description.length ? (
+                <TaskDescriptionForm
+                  task={task}
+                  taskDescription={taskDescription}
+                  handleOnSubmitDescription={handleOnSubmitDescription}
+                  setTaskDescription={setTaskDescription}
+                />
               ) : (
                 <>
                   {isEditing ? (
-                    <form
-                      className="flex flex-col gap-2"
-                      onSubmit={handleOnSubmitDescription}
-                    >
-                      <Textarea
-                        required
-                        placeholder="Add a more detailed description"
-                        className="w-full"
-                        radius="sm"
-                        onChange={(e) => setTaskDescription(e.target.value)}
-                        value={taskDescription || task.description}
-                      />
-                      <div className="flex flex-row gap-2">
-                        <Button
-                          radius="sm"
-                          type="submit"
-                          className="bg-secondaryBtn text-taskText"
-                        >
-                          Save
-                        </Button>
-                      </div>
-                    </form>
+                    <TaskDescriptionForm
+                      task={task}
+                      taskDescription={taskDescription}
+                      handleOnSubmitDescription={handleOnSubmitDescription}
+                      setTaskDescription={setTaskDescription}
+                    />
                   ) : (
                     <p className="text-sm">{task.description}</p>
                   )}
