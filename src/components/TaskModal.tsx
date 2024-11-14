@@ -40,7 +40,13 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      onClose={() => {
+        setIsEditing(false);
+      }}
+    >
       <ModalContent className="bg-task min-h-96">
         {(onClose) => (
           <>
@@ -76,6 +82,7 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                   taskDescription={taskDescription}
                   handleOnSubmitDescription={handleOnSubmitDescription}
                   setTaskDescription={setTaskDescription}
+                  cancelEditing={() => setIsEditing(false)}
                 />
               ) : (
                 <>
@@ -85,6 +92,7 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                       taskDescription={taskDescription}
                       handleOnSubmitDescription={handleOnSubmitDescription}
                       setTaskDescription={setTaskDescription}
+                      cancelEditing={() => setIsEditing(false)}
                     />
                   ) : (
                     <p className="text-sm">{task.description}</p>
