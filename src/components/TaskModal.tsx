@@ -8,13 +8,12 @@ import {
   ModalBody,
   Button,
   ModalFooter,
-  Input,
 } from '@nextui-org/react';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { FaPager } from 'react-icons/fa';
 import { useTasksContext } from '@/context/TasksContext';
 import TaskDescriptionForm from './TaskDescriptionForm';
-// import { MdOutlineEdit } from 'react-icons/md';
+import TaskTitleForm from './TaskTitleForm';
 
 interface ModalProps {
   task: TaskType;
@@ -26,12 +25,11 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
   const [taskDescription, setTaskDescription] = useState<string>(
     task.description || ''
   );
-  const [title, setTitle] = useState<string>(task.title || '');
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isTitleEditing, setIsTitleEditing] = useState<boolean>(false);
 
-  const { updateDescription, updateTitle } = useTasksContext();
+  const { updateDescription } = useTasksContext();
 
   const handleOnSubmitDescription = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,18 +41,6 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
 
     updateDescription(task.id, taskDescription);
     setIsEditing(false);
-  };
-
-  const handleOnSubmitTitle = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!title) {
-      setIsTitleEditing(false);
-      return;
-    }
-
-    updateTitle(task.id, title);
-    setIsTitleEditing(false);
   };
 
   return (
@@ -74,51 +60,10 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                 <FaPager size={17} className="mt-1" />
               </div>
               {isTitleEditing ? (
-                <form
-                  onSubmit={handleOnSubmitTitle}
-                  className="flex flex-col gap-2 w-full"
-                >
-                  <Input
-                    autoFocus
-                    required
-                    radius="sm"
-                    placeholder="Enter a title or paste a link"
-                    classNames={{
-                      inputWrapper: [
-                        'bg-[#22272b]',
-                        'group-data-[focus=true]:bg-[#22272b]',
-                        'group-data-[hover=true]:bg-[#22272b]',
-                        'group-data-[focus-visible=true]:ring-0',
-                      ],
-                      input: [
-                        'placeholder:text-default-700/50',
-                        'group-data-[has-value=true]:text-taskText',
-                      ],
-                    }}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                  <div className="flex flex-row gap-1">
-                    <Button
-                      type="submit"
-                      size="sm"
-                      className="text-taskText rounded-sm bg-secondaryBtn"
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="light"
-                      className="text-taskText rounded-sm bg-[#e2e6ee0f]"
-                      onClick={() => {
-                        setTitle(task.title);
-                        setIsTitleEditing(false);
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </form>
+                <TaskTitleForm
+                  task={task}
+                  cancelEditing={() => setIsTitleEditing(false)}
+                />
               ) : (
                 <h2
                   className="text-lg font-semibold"
