@@ -11,7 +11,6 @@ import {
 } from '@nextui-org/react';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { FaPager } from 'react-icons/fa';
-import { useTasksContext } from '@/context/TasksContext';
 import TaskDescriptionForm from './TaskDescriptionForm';
 import TaskTitleForm from './TaskTitleForm';
 
@@ -22,26 +21,8 @@ interface ModalProps {
 }
 
 const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
-  const [taskDescription, setTaskDescription] = useState<string>(
-    task.description || ''
-  );
-
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isTitleEditing, setIsTitleEditing] = useState<boolean>(false);
-
-  const { updateDescription } = useTasksContext();
-
-  const handleOnSubmitDescription = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!taskDescription) {
-      setIsEditing(false);
-      return;
-    }
-
-    updateDescription(task.id, taskDescription);
-    setIsEditing(false);
-  };
 
   return (
     <Modal
@@ -52,7 +33,7 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
         setIsTitleEditing(false);
       }}
     >
-      <ModalContent className="bg-[#31393f] min-h-96">
+      <ModalContent className="bg-modal min-h-96">
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-row items-start gap-4 text-taskText p-7">
@@ -94,9 +75,6 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
               {!task.description.length ? (
                 <TaskDescriptionForm
                   task={task}
-                  taskDescription={taskDescription}
-                  handleOnSubmitDescription={handleOnSubmitDescription}
-                  setTaskDescription={setTaskDescription}
                   cancelEditing={() => setIsEditing(false)}
                 />
               ) : (
@@ -104,9 +82,6 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                   {isEditing ? (
                     <TaskDescriptionForm
                       task={task}
-                      taskDescription={taskDescription}
-                      handleOnSubmitDescription={handleOnSubmitDescription}
-                      setTaskDescription={setTaskDescription}
                       cancelEditing={() => setIsEditing(false)}
                     />
                   ) : (
@@ -116,7 +91,7 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
               )}
             </ModalBody>
             <ModalFooter>
-              <Button variant="light" color="danger" onClick={onClose}>
+              <Button variant="light" className='text-taskText' onClick={onClose}>
                 Close
               </Button>
             </ModalFooter>

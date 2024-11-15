@@ -18,6 +18,8 @@ export const theme = {
     white: '#ffffff',
     navbar: '#0000003d',
     secondaryBtn: '#0c66e4',
+    modal: '#31393f',
+    modalInput: '#22272b',
   },
   extend: {},
 };

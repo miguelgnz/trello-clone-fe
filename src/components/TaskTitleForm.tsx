@@ -1,8 +1,9 @@
 'use client';
 import { useState } from 'react';
-import { Button, Input } from '@nextui-org/react';
+import { Button, Textarea } from '@nextui-org/react';
 import { useTasksContext } from '@/context/TasksContext';
 import { TaskType } from '@/utils/types';
+import { constants } from '@/utils/constants';
 
 interface TaskTitleFormProps {
   cancelEditing: () => void;
@@ -15,6 +16,7 @@ export default function TaskTitleForm({
 }: TaskTitleFormProps) {
   const { updateTitle } = useTasksContext();
   const [title, setTitle] = useState<string>(task.title || '');
+  const { customModalInputClasses } = constants;
 
   const handleOnSubmitTitle = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,25 +32,17 @@ export default function TaskTitleForm({
 
   return (
     <form onSubmit={handleOnSubmitTitle} className="flex flex-col gap-2 w-full">
-      <Input
+      <Textarea
         autoFocus
         required
         radius="sm"
         placeholder="Enter a title or paste a link"
-        classNames={{
-          inputWrapper: [
-            'bg-[#22272b]',
-            'group-data-[focus=true]:bg-[#22272b]',
-            'group-data-[hover=true]:bg-[#22272b]',
-            'group-data-[focus-visible=true]:ring-0',
-          ],
-          input: [
-            'placeholder:text-default-700/50',
-            'group-data-[has-value=true]:text-taskText',
-          ],
-        }}
+        classNames={customModalInputClasses}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        onBlur={() => {
+          cancelEditing();
+        }}
       />
       <div className="flex flex-row gap-1">
         <Button
@@ -61,7 +55,7 @@ export default function TaskTitleForm({
         <Button
           size="sm"
           variant="light"
-          className="text-taskText rounded-sm bg-[#e2e6ee0f]"
+          className="text-taskText rounded-sm"
           onClick={() => {
             setTitle(task.title);
             cancelEditing();

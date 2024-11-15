@@ -35,7 +35,7 @@ const Task = (props: Props) => {
         style={style}
       >
         <div className="flex flex-col gap-2">
-          <p className="text-taskText text-sm font-normal m-1">
+          <p className="text-taskText text-sm font-normal">
             {props.task.title.length > 280
               ? `${props.task.title.slice(0, 280)}...`
               : props.task.title}
