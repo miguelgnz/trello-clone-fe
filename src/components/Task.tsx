@@ -1,29 +1,22 @@
 'use client';
 import { TaskType } from '@/utils/types';
 import { useDraggable } from '@dnd-kit/core';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import { GrTextAlignFull } from 'react-icons/gr';
-import { MdOutlineEdit } from 'react-icons/md';
-import { useTasksContext } from '@/context/TasksContext';
-import { Button, Tooltip, useDisclosure } from '@nextui-org/react';
+// import { useTasksContext } from '@/context/TasksContext';
+import { Tooltip, useDisclosure } from '@nextui-org/react';
 
 import TaskModal from './TaskModal';
-import { useState } from 'react';
 
 interface Props {
   task: TaskType;
 }
 
 const Task = (props: Props) => {
-  const [isHovered, setIsHovered] = useState<boolean>(false);
-
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.task.id,
   });
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  const { deleteTask } = useTasksContext();
 
   const style = {
     transform: transform
@@ -34,8 +27,6 @@ const Task = (props: Props) => {
   return (
     <>
       <div
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         onMouseUp={onOpen}
         ref={setNodeRef}
         {...attributes}
@@ -61,6 +52,7 @@ const Task = (props: Props) => {
             </Tooltip>
           )}
         </div>
+        {/* 
         <div className="flex flex-row justify-end">
           {isHovered && (
             <>
@@ -90,6 +82,7 @@ const Task = (props: Props) => {
             </>
           )}
         </div>
+         */}
       </div>
       <TaskModal
         isOpen={isOpen}

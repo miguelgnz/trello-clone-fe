@@ -8,6 +8,7 @@ interface ContextType {
   addTask: (newTask: TaskType) => void;
   deleteTask: (taskId: string) => void;
   updateDescription: (taskId: string, newDescription: string) => void;
+  updateTitle: (taskId: string, newTitle: string) => void;
 }
 
 const ctx: ContextType = {
@@ -16,6 +17,7 @@ const ctx: ContextType = {
   addTask: () => {},
   deleteTask: () => {},
   updateDescription: () => {},
+  updateTitle: () => {},
 };
 
 export const TasksContext = createContext(ctx);
@@ -30,7 +32,7 @@ export const TasksContextProvider = ({
   const [tasks, setTasks] = useState<TaskType[]>([
     {
       id: '550e8400-e29b-41d4-a716-446655440000',
-      title: 'Finish Trello Clone project',
+      title: 'This is the first task in your board!',
       description: '',
       status: 'TODO',
       priority: 'High',
@@ -38,39 +40,7 @@ export const TasksContextProvider = ({
     {
       id: '550e8400-e29b-41d4-a716-446655440030',
       title:
-        'Ribeye pork boudin meatloaf, prosciutto tenderloin frankfurter ground round pastrami kielbasa chuck',
-      description:
-        'Chislic tenderloin sirloin, landjaeger bacon jerky buffalo. Capicola ground round ham beef ribs meatball, hamburger kevin burgdoggen salami jowl pork loin pork belly venison. Shank pork loin frankfurter tenderloin tri-tip ground round. Prosciutto meatloaf t-bone drumstick shoulder turducken chuck picanha kielbasa swine. Cupim leberkas ham hock shoulder jowl biltong pork',
-      status: 'TODO',
-      priority: 'High',
-    },
-    {
-      id: '550e8400-e29b-41d4-a716-446655440000',
-      title: 'Finish Trello Clone project',
-      description: '',
-      status: 'TODO',
-      priority: 'High',
-    },
-    {
-      id: '550e8400-e29b-41d4-a716-446655440030',
-      title:
-        'Ribeye pork boudin meatloaf, prosciutto tenderloin frankfurter ground round pastrami kielbasa chuck',
-      description:
-        'Chislic tenderloin sirloin, landjaeger bacon jerky buffalo. Capicola ground round ham beef ribs meatball, hamburger kevin burgdoggen salami jowl pork loin pork belly venison. Shank pork loin frankfurter tenderloin tri-tip ground round. Prosciutto meatloaf t-bone drumstick shoulder turducken chuck picanha kielbasa swine. Cupim leberkas ham hock shoulder jowl biltong pork',
-      status: 'TODO',
-      priority: 'High',
-    },
-    {
-      id: '550e8400-e29b-41d4-a716-446655440000',
-      title: 'Finish Trello Clone project',
-      description: '',
-      status: 'TODO',
-      priority: 'High',
-    },
-    {
-      id: '550e8400-e29b-41d4-a716-446655440030',
-      title:
-        'Ribeye pork boudin meatloaf, prosciutto tenderloin frankfurter ground round pastrami kielbasa chuck',
+        'Tasks can be dragged and dropped to change their status. Try it out!',
       description:
         'Chislic tenderloin sirloin, landjaeger bacon jerky buffalo. Capicola ground round ham beef ribs meatball, hamburger kevin burgdoggen salami jowl pork loin pork belly venison. Shank pork loin frankfurter tenderloin tri-tip ground round. Prosciutto meatloaf t-bone drumstick shoulder turducken chuck picanha kielbasa swine. Cupim leberkas ham hock shoulder jowl biltong pork',
       status: 'TODO',
@@ -112,12 +82,26 @@ export const TasksContextProvider = ({
     );
   };
 
+  const updateTitle = (taskId: string, newTitle: string) => {
+    setTasks((prevState) =>
+      prevState.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              title: newTitle,
+            }
+          : task
+      )
+    );
+  };
+
   const value = {
     tasks,
     setTasksOnDragEvent,
     addTask,
     deleteTask,
     updateDescription,
+    updateTitle,
   };
 
   return (

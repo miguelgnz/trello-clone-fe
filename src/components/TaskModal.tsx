@@ -8,11 +8,13 @@ import {
   ModalBody,
   Button,
   ModalFooter,
+  Input,
 } from '@nextui-org/react';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { FaPager } from 'react-icons/fa';
 import { useTasksContext } from '@/context/TasksContext';
 import TaskDescriptionForm from './TaskDescriptionForm';
+import { MdOutlineEdit } from 'react-icons/md';
 
 interface ModalProps {
   task: TaskType;
@@ -21,10 +23,17 @@ interface ModalProps {
 }
 
 const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
-  const [taskDescription, setTaskDescription] = useState<string>('');
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [taskDescription, setTaskDescription] = useState<string>(
+    task.description || ''
+  );
+  const [title, setTitle] = useState<string>(task.title || '');
 
-  const { updateDescription } = useTasksContext();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isTitleEditing, setIsTitleEditing] = useState<boolean>(false);
+
+  const [isTitleHovered, setIsTitleHovered] = useState<boolean>(false);
+
+  const { updateDescription, updateTitle } = useTasksContext();
 
   const handleOnSubmitDescription = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,12 +48,26 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
     setIsEditing(false);
   };
 
+  const handleOnSubmitTitle = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!title) {
+      setIsTitleEditing(false);
+      return;
+    }
+
+    updateTitle(task.id, title);
+    setTitle('');
+    setIsTitleEditing(false);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       onClose={() => {
         setIsEditing(false);
+        setIsTitleEditing(false);
       }}
     >
       <ModalContent className="bg-task min-h-96">
@@ -54,7 +77,55 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
               <div>
                 <FaPager size={17} className="mt-1" />
               </div>
-              <h3 className="text-lg font-semibold">{task.title}</h3>
+              {isTitleEditing ? (
+                <form
+                  onSubmit={handleOnSubmitTitle}
+                  className="flex flex-col gap-2 w-full"
+                >
+                  <Input
+                    required
+                    radius="sm"
+                    placeholder="Task title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <div className="flex flex-row gap-1">
+                    <Button
+                      size="sm"
+                      className="text-taskText rounded-sm bg-secondaryBtn"
+                      onClick={() => {
+                        updateTitle(task.id, title);
+                        setIsTitleEditing(false);
+                      }}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="light"
+                      className="text-taskText rounded-sm bg-[#e2e6ee0f]"
+                      onClick={() => setIsTitleEditing(false)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              ) : (
+                <h2
+                  className="text-lg font-semibold"
+                  onClick={() => setIsTitleEditing(true)}
+                  onMouseEnter={() => setIsTitleHovered(true)}
+                  onMouseLeave={() => setIsTitleHovered(false)}
+                >
+                  {task.title}
+                  {isTitleHovered && (
+                    <MdOutlineEdit
+                      size={15}
+                      className="text-taskText cursor-pointer"
+                    />
+                  )}
+                </h2>
+              )}
             </ModalHeader>
             <ModalBody className="text-taskText flex flex-col gap-4">
               <div className="flex flex-row justify-between items-center gap-4 text-taskText">
