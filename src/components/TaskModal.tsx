@@ -14,7 +14,7 @@ import { GrTextAlignFull } from 'react-icons/gr';
 import { FaPager } from 'react-icons/fa';
 import { useTasksContext } from '@/context/TasksContext';
 import TaskDescriptionForm from './TaskDescriptionForm';
-import { MdOutlineEdit } from 'react-icons/md';
+// import { MdOutlineEdit } from 'react-icons/md';
 
 interface ModalProps {
   task: TaskType;
@@ -31,8 +31,6 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isTitleEditing, setIsTitleEditing] = useState<boolean>(false);
 
-  const [isTitleHovered, setIsTitleHovered] = useState<boolean>(false);
-
   const { updateDescription, updateTitle } = useTasksContext();
 
   const handleOnSubmitDescription = (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,7 +42,6 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
     }
 
     updateDescription(task.id, taskDescription);
-    setTaskDescription('');
     setIsEditing(false);
   };
 
@@ -57,7 +54,6 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
     }
 
     updateTitle(task.id, title);
-    setTitle('');
     setIsTitleEditing(false);
   };
 
@@ -70,10 +66,10 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
         setIsTitleEditing(false);
       }}
     >
-      <ModalContent className="bg-task min-h-96">
+      <ModalContent className="bg-[#31393f] min-h-96">
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-row items-start gap-4 text-taskText">
+            <ModalHeader className="flex flex-row items-start gap-4 text-taskText p-7">
               <div>
                 <FaPager size={17} className="mt-1" />
               </div>
@@ -83,20 +79,30 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                   className="flex flex-col gap-2 w-full"
                 >
                   <Input
+                    autoFocus
                     required
                     radius="sm"
-                    placeholder="Task title"
+                    placeholder="Enter a title or paste a link"
+                    classNames={{
+                      inputWrapper: [
+                        'bg-[#22272b]',
+                        'group-data-[focus=true]:bg-[#22272b]',
+                        'group-data-[hover=true]:bg-[#22272b]',
+                        'group-data-[focus-visible=true]:ring-0',
+                      ],
+                      input: [
+                        'placeholder:text-default-700/50',
+                        'group-data-[has-value=true]:text-taskText',
+                      ],
+                    }}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   <div className="flex flex-row gap-1">
                     <Button
+                      type="submit"
                       size="sm"
                       className="text-taskText rounded-sm bg-secondaryBtn"
-                      onClick={() => {
-                        updateTitle(task.id, title);
-                        setIsTitleEditing(false);
-                      }}
                     >
                       Save
                     </Button>
@@ -104,7 +110,10 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                       size="sm"
                       variant="light"
                       className="text-taskText rounded-sm bg-[#e2e6ee0f]"
-                      onClick={() => setIsTitleEditing(false)}
+                      onClick={() => {
+                        setTitle(task.title);
+                        setIsTitleEditing(false);
+                      }}
                     >
                       Cancel
                     </Button>
@@ -114,20 +123,12 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                 <h2
                   className="text-lg font-semibold"
                   onClick={() => setIsTitleEditing(true)}
-                  onMouseEnter={() => setIsTitleHovered(true)}
-                  onMouseLeave={() => setIsTitleHovered(false)}
                 >
                   {task.title}
-                  {isTitleHovered && (
-                    <MdOutlineEdit
-                      size={15}
-                      className="text-taskText cursor-pointer"
-                    />
-                  )}
                 </h2>
               )}
             </ModalHeader>
-            <ModalBody className="text-taskText flex flex-col gap-4">
+            <ModalBody className="text-taskText flex flex-col gap-4 p-7">
               <div className="flex flex-row justify-between items-center gap-4 text-taskText">
                 <div className="flex flex-row  gap-4 text-taskText items-center">
                   <GrTextAlignFull size={17} className="mt-1" />
@@ -145,8 +146,6 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                     </Button>
                   ))}
               </div>
-
-              {/* FIX BEHAVIOR */}
               {!task.description.length ? (
                 <TaskDescriptionForm
                   task={task}

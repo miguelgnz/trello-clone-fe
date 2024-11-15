@@ -10,7 +10,7 @@ interface TaskDescriptionFormProps {
 }
 
 const TaskDescriptionForm = ({
-  // task,
+  task,
   taskDescription,
   handleOnSubmitDescription,
   setTaskDescription,
@@ -19,10 +19,22 @@ const TaskDescriptionForm = ({
   return (
     <form className="flex flex-col gap-2" onSubmit={handleOnSubmitDescription}>
       <Textarea
-        required
-        placeholder="Add a more detailed description"
+        autoFocus
         className="w-full"
-        // classNames={constants.customInputClasses}
+        classNames={{
+          inputWrapper: [
+            'bg-[#22272b]',
+            'group-data-[focus=true]:bg-[#22272b]',
+            'group-data-[hover=true]:bg-[#22272b]',
+            'group-data-[focus-visible=true]:ring-0',
+          ],
+          input: [
+            'placeholder:text-default-700/50',
+            'group-data-[has-value=true]:text-taskText',
+          ],
+        }}
+        placeholder="Add a more detailed description"
+        required
         radius="sm"
         onChange={(e) => setTaskDescription(e.target.value)}
         value={taskDescription}
@@ -30,6 +42,7 @@ const TaskDescriptionForm = ({
       <div className="flex flex-row gap-2">
         <Button
           radius="sm"
+          size="sm"
           type="submit"
           className="bg-secondaryBtn text-taskText"
         >
@@ -37,9 +50,11 @@ const TaskDescriptionForm = ({
         </Button>
         <Button
           radius="sm"
+          size="sm"
           variant="light"
           className="text-taskText"
           onClick={() => {
+            setTaskDescription(task.description);
             cancelEditing();
           }}
         >
