@@ -13,7 +13,6 @@ interface TaskDescriptionFormProps {
 
 const TaskDescriptionForm = ({
   task,
-
   cancelEditing,
 }: TaskDescriptionFormProps) => {
   const [taskDescription, setTaskDescription] = useState<string>(
@@ -47,22 +46,19 @@ const TaskDescriptionForm = ({
         radius="sm"
         value={taskDescription}
         onChange={(e) => setTaskDescription(e.target.value)}
-        onBlur={() => {
-          cancelEditing();
-        }}
       />
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-1">
         <Button
-          size="sm"
           type="submit"
-          className="bg-secondaryBtn text-taskText"
+          size="sm"
+          className="bg-secondaryBtn text-taskText rounded-sm"
         >
           Save
         </Button>
         <Button
           size="sm"
           variant="light"
-          className="text-taskText"
+          className="text-taskText rounded-sm"
           onClick={() => {
             setTaskDescription(task.description);
             cancelEditing();

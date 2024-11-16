@@ -2,19 +2,25 @@
 import { TaskType } from '@/utils/types';
 import { useDraggable } from '@dnd-kit/core';
 import { GrTextAlignFull } from 'react-icons/gr';
-// import { useTasksContext } from '@/context/TasksContext';
-import { Tooltip, useDisclosure } from '@nextui-org/react';
+import { useTasksContext } from '@/context/TasksContext';
+import { Button, Tooltip, useDisclosure } from '@nextui-org/react';
 
 import TaskModal from './TaskModal';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { useState } from 'react';
 
 interface Props {
   task: TaskType;
 }
 
 const Task = (props: Props) => {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.task.id,
   });
+
+  const { deleteTask } = useTasksContext();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -27,6 +33,8 @@ const Task = (props: Props) => {
   return (
     <>
       <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onMouseUp={onOpen}
         ref={setNodeRef}
         {...attributes}
@@ -34,44 +42,34 @@ const Task = (props: Props) => {
         className="bg-task p-4 rounded-xl z-[2] hover:border-1 border-secondaryBtn"
         style={style}
       >
-        <div className="flex flex-col gap-2">
-          <p className="text-taskText text-sm font-normal">
-            {props.task.title.length > 280
-              ? `${props.task.title.slice(0, 280)}...`
-              : props.task.title}
-          </p>
-          {props.task.description && (
-            <Tooltip
-              content="This task has a description"
-              size="sm"
-              radius="sm"
-            >
-              <div className="w-fit">
-                <GrTextAlignFull size={13} className="text-taskText" />
-              </div>
-            </Tooltip>
-          )}
-        </div>
-        {/* 
-        <div className="flex flex-row justify-end">
-          {isHovered && (
-            <>
-              <Tooltip content="Edit title" size="sm" radius="sm">
-                <Button
-                  className="text-taskText"
-                  isIconOnly
-                  variant="light"
-                  onClick={() => {}}
-                >
-                  <MdOutlineEdit />
-                </Button>
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-col gap-2 w-[90%]">
+            <p className="text-taskText text-sm font-normal">
+              {props.task.title.length > 280
+                ? `${props.task.title.slice(0, 280)}...`
+                : props.task.title}
+            </p>
+            {props.task.description && (
+              <Tooltip
+                content="This task has a description"
+                size="sm"
+                radius="sm"
+              >
+                <div className="w-fit">
+                  <GrTextAlignFull size={13} className="text-taskText" />
+                </div>
               </Tooltip>
+            )}
+          </div>
+          <div className="relative top-[-12px] left-[4px] w-[10%]">
+            {isHovered && (
               <Tooltip content="Delete task" size="sm" radius="sm">
                 <Button
                   className="text-danger"
                   color="danger"
                   isIconOnly
                   variant="light"
+                  size="sm"
                   onClick={() => {
                     deleteTask(props.task.id);
                   }}
@@ -79,10 +77,9 @@ const Task = (props: Props) => {
                   <FaRegTrashAlt />
                 </Button>
               </Tooltip>
-            </>
-          )}
+            )}
+          </div>
         </div>
-         */}
       </div>
       <TaskModal
         isOpen={isOpen}

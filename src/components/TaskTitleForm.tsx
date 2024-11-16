@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { Button, Textarea } from '@nextui-org/react';
 import { useTasksContext } from '@/context/TasksContext';
@@ -16,6 +17,7 @@ export default function TaskTitleForm({
 }: TaskTitleFormProps) {
   const { updateTitle } = useTasksContext();
   const [title, setTitle] = useState<string>(task.title || '');
+
   const { customModalInputClasses } = constants;
 
   const handleOnSubmitTitle = (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,18 +33,15 @@ export default function TaskTitleForm({
   };
 
   return (
-    <form onSubmit={handleOnSubmitTitle} className="flex flex-col gap-2 w-full">
+    <form className="flex flex-col gap-2 w-full" onSubmit={handleOnSubmitTitle}>
       <Textarea
         autoFocus
+        classNames={customModalInputClasses}
         required
         radius="sm"
         placeholder="Enter a title or paste a link"
-        classNames={customModalInputClasses}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        onBlur={() => {
-          cancelEditing();
-        }}
       />
       <div className="flex flex-row gap-1">
         <Button
