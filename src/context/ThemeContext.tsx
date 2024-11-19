@@ -1,10 +1,18 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useState } from "react";
+import { Background } from '@/utils/types';
+import { createContext, useContext, useState, useEffect } from 'react';
 
-const ctx = {
+interface ThemeContextType {
+  darkMode: boolean;
+  switchDarkMode: () => void;
+  changeBackground: (background: Background) => void;
+}
+
+const ctx: ThemeContextType = {
   darkMode: false,
   switchDarkMode: () => {},
+  changeBackground: () => {},
 };
 
 export const ThemeContext = createContext(ctx);
@@ -17,14 +25,27 @@ export const ThemeContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [darkMode, setDarkMode] = useState(false);
+  const [background, setBackground] = useState<Background>({
+    id: 'bg-1',
+    color: 'bg-gradient-to-r from-pink-500 to-yellow-500',
+  });
+
+  useEffect(() => {
+    document.body.className = background.color;
+  }, [background]);
 
   const switchDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
+  const changeBackground = (background: Background) => {
+    setBackground(background);
+  };
+
   const value = {
     darkMode,
     switchDarkMode,
+    changeBackground,
   };
 
   return (

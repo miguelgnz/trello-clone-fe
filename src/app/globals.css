@@ -39,8 +39,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
-
+  /* background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%); */
 }
 
 * {

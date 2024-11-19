@@ -12,3 +12,9 @@ export interface ColumnType {
   id: TaskStatus;
   title: string;
 }
+
+export interface Background {
+  id: string;
+  color: string;
+  emoji?: string;
+}

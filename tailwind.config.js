@@ -11,17 +11,18 @@ export const content = [
   './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
 ];
 export const theme = {
-  colors: {
-    column: '#101204',
-    task: '#22272b',
-    taskText: '#b6c2cf',
-    white: '#ffffff',
-    navbar: '#0000003d',
-    secondaryBtn: '#0c66e4',
-    modal: '#31393f',
-    modalInput: '#22272b',
+  extend: {
+    colors: {
+      column: '#101204',
+      task: '#22272b',
+      taskText: '#b6c2cf',
+      white: '#ffffff',
+      navbar: '#0000003d',
+      secondaryBtn: '#0c66e4',
+      modal: '#31393f',
+      modalInput: '#22272b',
+    },
   },
-  extend: {},
 };
 export const darkMode = 'class';
 export const plugins = [nextui()];
