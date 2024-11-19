@@ -40,9 +40,9 @@ const CustomNavbar = () => {
         <NavbarItem>
           <Popover
             shouldCloseOnBlur
-            backdrop="opaque"
+            backdrop="blur"
             isOpen={isPopoverOpen}
-            onOpenChange={(open) => setIsPopoverOpen(!open)}
+            onOpenChange={() => setIsPopoverOpen(false)}
           >
             <PopoverTrigger>
               <Button
@@ -60,6 +60,7 @@ const CustomNavbar = () => {
               <div className="px-1 py-2">
                 {!selectedSetting && (
                   <Button
+                    variant="light"
                     onClick={() => {
                       setSelectedSetting('background');
                     }}
