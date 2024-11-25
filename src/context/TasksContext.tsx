@@ -36,16 +36,14 @@ export const TasksContextProvider = ({
 
   //Save tasks to local storage
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    const handler = setTimeout(() => {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, 500);
 
-  //Get tasks from local storage
-  useEffect(() => {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-      setTasks(JSON.parse(storedTasks));
-    }
-  }, []);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [tasks]);
 
   const setTasksOnDragEvent = (taskId: string, newStatus: TaskStatus) => {
     setTasks((prevState) =>
