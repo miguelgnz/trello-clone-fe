@@ -1,6 +1,6 @@
 'use client';
 import { TaskStatus, TaskType } from '@/utils/types';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 interface ContextType {
   tasks: TaskType[];
@@ -29,24 +29,23 @@ export const TasksContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [tasks, setTasks] = useState<TaskType[]>([
-    {
-      id: '550e8400-e29b-41d4-a716-446655440000',
-      title: 'This is the first task in your board!',
-      description: '',
-      status: 'TODO',
-      priority: 'High',
-    },
-    {
-      id: '550e8400-e29b-41d4-a716-446655440030',
-      title:
-        'Tasks can be dragged and dropped to change their status. Try it out!',
-      description:
-        'Chislic tenderloin sirloin, landjaeger bacon jerky buffalo. Capicola ground round ham beef ribs meatball, hamburger kevin burgdoggen salami jowl pork loin pork belly venison. Shank pork loin frankfurter tenderloin tri-tip ground round. Prosciutto meatloaf t-bone drumstick shoulder turducken chuck picanha kielbasa swine. Cupim leberkas ham hock shoulder jowl biltong pork',
-      status: 'TODO',
-      priority: 'High',
-    },
-  ]);
+  const [tasks, setTasks] = useState<TaskType[]>(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    return storedTasks ? JSON.parse(storedTasks) : [];
+  });
+
+  //Save tasks to local storage
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  //Get tasks from local storage
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
 
   const setTasksOnDragEvent = (taskId: string, newStatus: TaskStatus) => {
     setTasks((prevState) =>

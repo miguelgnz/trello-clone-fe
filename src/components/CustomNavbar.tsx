@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import SwitchDarkMode from './SwitchDarkMode';
 import {
   Navbar,
   NavbarBrand,
@@ -35,9 +34,6 @@ const CustomNavbar = () => {
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem>
-          <SwitchDarkMode />
-        </NavbarItem>
-        <NavbarItem>
           <Popover
             shouldCloseOnBlur
             backdrop="blur"
@@ -56,10 +52,11 @@ const CustomNavbar = () => {
                 <IoSettingsOutline size={28} />
               </Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className="bg-modal">
               <div className="px-1 py-2">
                 {!selectedSetting && (
                   <Button
+                    className="text-taskText"
                     variant="light"
                     onClick={() => {
                       setSelectedSetting('background');
