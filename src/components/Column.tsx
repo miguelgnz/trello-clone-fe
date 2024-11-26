@@ -37,7 +37,7 @@ export default function Column({ column, tasks }: ColumnProps) {
         <h2 className="text-white font-sans text-sm font-semibold">
           {column.title}
         </h2>
-        <Popover placement='right'>
+        <Popover placement='bottom-start'>
           <PopoverTrigger>
             <Button isIconOnly variant="light" className="text-white">
               <HiOutlineDotsHorizontal size={20} />

@@ -29,10 +29,15 @@ export const TasksContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [tasks, setTasks] = useState<TaskType[]>(() => {
-    const storedTasks = localStorage.getItem('tasks');
-    return storedTasks ? JSON.parse(storedTasks) : [];
-  });
+  const [tasks, setTasks] = useState<TaskType[]>([]);
+
+  //Set tasks from local storage
+  useEffect(() => {
+      const storedTasks = localStorage.getItem('tasks');
+      if (storedTasks) {
+        setTasks(JSON.parse(storedTasks));
+      }
+  }, []);
 
   //Save tasks to local storage
   useEffect(() => {

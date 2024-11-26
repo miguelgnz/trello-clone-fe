@@ -1,6 +1,12 @@
 'use client';
 
-import { createContext, useState, useContext, ReactNode } from 'react';
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from 'react';
 import { ColumnType } from '@/utils/types';
 
 interface ColumnsContextType {
@@ -31,6 +37,25 @@ export const ColumnsContextProvider = ({
   children: ReactNode;
 }) => {
   const [columns, setColumns] = useState<ColumnType[]>(INITIAL_COLUMNS);
+
+  //Set columns from local storage
+  useEffect(() => {
+    const storedColumns = localStorage.getItem('columns');
+    if (storedColumns) {
+      setColumns(JSON.parse(storedColumns));
+    }
+  }, []);
+
+  //Save columns to local storage
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      localStorage.setItem('columns', JSON.stringify(columns));
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [columns]);
 
   const addColumn = (newColumn: ColumnType) => {
     setColumns((prevState) => {
