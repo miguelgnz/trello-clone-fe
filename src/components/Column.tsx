@@ -30,7 +30,7 @@ export default function Column({ column, tasks }: ColumnProps) {
 
   return (
     <div
-      className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min max-h-[calc(100vh-6rem)]"
+      className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min" //max-h-[calc(100vh-6rem)]
       ref={setNodeRef}
     >
       <div className="flex flex-row items-center justify-between">
@@ -57,7 +57,7 @@ export default function Column({ column, tasks }: ColumnProps) {
         </Popover>
       </div>
       {/* List of tasks */}
-      <div className="flex flex-col gap-2 overflow-hidden overflow-y-scroll">
+      <div className="flex flex-col gap-2">
         {tasks.map((task) => {
           return <Task key={task.id} task={task} />;
         })}

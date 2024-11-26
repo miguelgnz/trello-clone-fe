@@ -27,16 +27,20 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
+      placement="center"
       onOpenChange={onOpenChange}
       onClose={() => {
         setIsEditing(false);
         setIsTitleEditing(false);
       }}
     >
-      <ModalContent className="bg-modal min-h-96">
+      <ModalContent className="bg-modal h-[540px] max-sm:w-[300px]">
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-row items-start gap-4 text-taskText p-7">
+            <ModalHeader
+              id="theHeader"
+              className="flex flex-row items-start gap-4 text-taskText h-[28%] p-[36px_36px_0_36px]"
+            >
               <div>
                 <FaPager size={17} className="mt-1" />
               </div>
@@ -46,15 +50,17 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                   cancelEditing={() => setIsTitleEditing(false)}
                 />
               ) : (
-                <h2
-                  className="text-lg font-semibold"
-                  onClick={() => setIsTitleEditing(true)}
-                >
-                  {task.title}
-                </h2>
+                <div className="h-[100%] overflow-hidden overflow-y-auto">
+                  <h2
+                    className="text-lg font-semibold"
+                    onClick={() => setIsTitleEditing(true)}
+                  >
+                    {task.title}
+                  </h2>
+                </div>
               )}
             </ModalHeader>
-            <ModalBody className="text-taskText flex flex-col gap-4 p-7">
+            <ModalBody className="text-taskText flex flex-col gap-4 p-7 h-[60%]">
               <div className="flex flex-row justify-between items-center gap-4 text-taskText">
                 <div className="flex flex-row  gap-4 text-taskText items-center">
                   <GrTextAlignFull size={17} className="mt-1" />
@@ -78,7 +84,7 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                   cancelEditing={() => setIsEditing(false)}
                 />
               ) : (
-                <>
+                <div className="h-[100%] overflow-hidden overflow-y-auto">
                   {isEditing ? (
                     <TaskDescriptionForm
                       task={task}
@@ -87,11 +93,15 @@ const TaskModal = ({ task, isOpen, onOpenChange }: ModalProps) => {
                   ) : (
                     <p className="text-sm">{task.description}</p>
                   )}
-                </>
+                </div>
               )}
             </ModalBody>
-            <ModalFooter>
-              <Button variant="light" className='text-taskText' onClick={onClose}>
+            <ModalFooter className="h-[12%]">
+              <Button
+                variant="light"
+                className="text-taskText"
+                onClick={onClose}
+              >
                 Close
               </Button>
             </ModalFooter>

@@ -16,7 +16,7 @@ interface Props {
 const Task = (props: Props) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: props.task.id,
   });
 
@@ -39,7 +39,7 @@ const Task = (props: Props) => {
         ref={setNodeRef}
         {...attributes}
         {...listeners}
-        className="bg-task p-4 rounded-xl z-[2] hover:border-1 border-secondaryBtn"
+        className={`bg-task p-4 rounded-xl hover:border-1 border-secondaryBtn ${isDragging ? 'z-[1000]' : ''}`}
         style={style}
       >
         <div className="flex flex-row justify-between">

@@ -35,6 +35,8 @@ export default function TaskTitleForm({
   return (
     <form className="flex flex-col gap-2 w-full" onSubmit={handleOnSubmitTitle}>
       <Textarea
+        maxRows={4}
+        minRows={4}
         autoFocus
         classNames={customModalInputClasses}
         required

@@ -6,6 +6,7 @@ import { MdOutlineClose } from 'react-icons/md';
 import { ColumnType, TaskType } from '@/utils/types';
 import { useTasksContext } from '@/context/TasksContext';
 import { constants } from '@/utils/constants';
+import { v4 as uuidv4 } from 'uuid';
 
 interface AddTaskFormProps {
   setIsInputVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +25,7 @@ export default function AddTaskForm({
 
   const onClickAddCard = () => {
     const newTask: TaskType = {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       title: userInput,
       description: '',
       status: column.id,
