@@ -38,7 +38,8 @@ const TaskDescriptionForm = ({
   return (
     <form className="flex flex-col gap-2" onSubmit={handleOnSubmitDescription}>
       <Textarea
-        autoFocus
+        maxRows={8}
+        minRows={8}
         className="w-full"
         classNames={customModalInputClasses}
         placeholder="Add a more detailed description"
