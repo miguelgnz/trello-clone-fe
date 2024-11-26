@@ -1,17 +1,20 @@
 'use client';
 
-import { ColumnType, TaskType } from '@/utils/types';
+import { useState } from 'react';
 import Column from '@/components/Column';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useTasksContext } from '@/context/TasksContext';
-
-const COLUMNS: ColumnType[] = [
-  { id: 'TODO', title: 'TODO' },
-  { id: 'IN_PROGRESS', title: 'IN PROGRESS' },
-  { id: 'DONE', title: 'DONE' },
-];
+import { Button } from '@nextui-org/react';
+import { FaPlus } from 'react-icons/fa';
+import { useColumnsContext } from '@/context/ColumnsContext';
+import AddColumnForm from '@/components/AddColumnForm';
+import { TaskType } from '@/utils/types';
 
 export default function HomePage() {
+  const { columns } = useColumnsContext();
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   const { tasks, setTasksOnDragEvent } = useTasksContext();
 
   function handleDragEnd(event: DragEndEvent) {
@@ -28,11 +31,11 @@ export default function HomePage() {
 
   return (
     <div
-      className="grid grid-cols-[repeat(3,_minmax(280px,_312px))] gap-4 p-4 min-w-full overflow-x-auto"
+      className="gap-4 p-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[312px] "
       id="main-grid"
     >
       <DndContext onDragEnd={handleDragEnd}>
-        {COLUMNS.map((column) => {
+        {columns.map((column) => {
           return (
             <Column
               key={column.id}
@@ -42,6 +45,20 @@ export default function HomePage() {
           );
         })}
       </DndContext>
+      {isFormOpen ? (
+        <>
+          <AddColumnForm setIsFormOpen={setIsFormOpen} />
+        </>
+      ) : (
+        <Button
+          className="bg-[#ffffff3d] text-white font-medium"
+          startContent={<FaPlus />}
+          variant="light"
+          onClick={() => setIsFormOpen(true)}
+        >
+          Add another column
+        </Button>
+      )}
     </div>
   );
 }

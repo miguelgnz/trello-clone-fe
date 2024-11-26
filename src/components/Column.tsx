@@ -4,10 +4,16 @@ import React, { useState } from 'react';
 import { ColumnType, TaskType } from '@/utils/types';
 import Task from '@/components/Task';
 import { useDroppable } from '@dnd-kit/core';
-import { Button } from '@nextui-org/react';
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@nextui-org/react';
 import AddTaskForm from './AddTaskForm';
-
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FaPlus } from 'react-icons/fa';
+import { useColumnsContext } from '@/context/ColumnsContext';
 
 interface ColumnProps {
   tasks: TaskType[];
@@ -20,14 +26,36 @@ export default function Column({ column, tasks }: ColumnProps) {
   });
   const [isInputVisible, setIsInputVisible] = useState(false);
 
+  const { deleteColumn } = useColumnsContext();
+
   return (
     <div
       className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min"
       ref={setNodeRef}
     >
-      <h2 className="text-white font-sans text-sm font-semibold">
-        {column.title}
-      </h2>
+      <div className="flex flex-row items-center justify-between">
+        <h2 className="text-white font-sans text-sm font-semibold">
+          {column.title}
+        </h2>
+        <Popover placement='right'>
+          <PopoverTrigger>
+            <Button isIconOnly variant="light" className="text-white">
+              <HiOutlineDotsHorizontal size={20} />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="bg-modal">
+            <div className="px-1 py-2">
+              <Button
+                color="danger"
+                variant="light"
+                onClick={() => deleteColumn(column.id)}
+              >
+                Delete Column
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
       {tasks.map((task) => {
         return <Task key={task.id} task={task} />;
       })}

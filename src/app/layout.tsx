@@ -3,6 +3,7 @@ import './globals.css';
 import Layout from '@/components/Layout';
 import { ThemeContextProvider } from '@/context/ThemeContext';
 import { TasksContextProvider } from '@/context/TasksContext';
+import { ColumnsContextProvider } from '@/context/ColumnsContext';
 import { NextUIProvider } from '@nextui-org/react';
 
 // const geistSans = localFont({
@@ -30,11 +31,13 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gradient-to-r from-pink-500 to-yellow-500">
         <ThemeContextProvider>
-          <TasksContextProvider>
-            <NextUIProvider>
-              <Layout>{children}</Layout>
-            </NextUIProvider>
-          </TasksContextProvider>
+          <ColumnsContextProvider>
+            <TasksContextProvider>
+              <NextUIProvider>
+                <Layout>{children}</Layout>
+              </NextUIProvider>
+            </TasksContextProvider>
+          </ColumnsContextProvider>
         </ThemeContextProvider>
       </body>
     </html>
