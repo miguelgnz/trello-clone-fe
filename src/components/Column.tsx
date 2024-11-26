@@ -30,14 +30,14 @@ export default function Column({ column, tasks }: ColumnProps) {
 
   return (
     <div
-      className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min"
+      className="flex flex-col gap-3 p-4 bg-column rounded-xl h-min max-h-[calc(100vh-6rem)]"
       ref={setNodeRef}
     >
       <div className="flex flex-row items-center justify-between">
         <h2 className="text-white font-sans text-sm font-semibold">
           {column.title}
         </h2>
-        <Popover placement='bottom-start'>
+        <Popover placement="bottom-start">
           <PopoverTrigger>
             <Button isIconOnly variant="light" className="text-white">
               <HiOutlineDotsHorizontal size={20} />
@@ -56,9 +56,12 @@ export default function Column({ column, tasks }: ColumnProps) {
           </PopoverContent>
         </Popover>
       </div>
-      {tasks.map((task) => {
-        return <Task key={task.id} task={task} />;
-      })}
+      {/* List of tasks */}
+      <div className="flex flex-col gap-2 overflow-hidden overflow-y-scroll">
+        {tasks.map((task) => {
+          return <Task key={task.id} task={task} />;
+        })}
+      </div>
       {isInputVisible && (
         <AddTaskForm setIsInputVisible={setIsInputVisible} column={column} />
       )}

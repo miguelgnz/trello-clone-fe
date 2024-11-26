@@ -31,7 +31,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="gap-4 p-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[312px] "
+      className="gap-4 p-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[280px]"
       id="main-grid"
     >
       <DndContext onDragEnd={handleDragEnd}>
