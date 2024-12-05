@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { TaskType } from '@/utils/types';
 import { Button, Textarea } from '@nextui-org/react';
 import { constants } from '@/utils/constants';
-import { useTasksContext } from '@/context/TasksContext';
+import { useBoardsContext } from '@/context/BoardsContext';
 
 interface TaskDescriptionFormProps {
   task: TaskType;
@@ -21,7 +21,7 @@ const TaskDescriptionForm = ({
 
   const { customModalInputClasses } = constants;
 
-  const { updateDescription } = useTasksContext();
+  const { updateTaskDescription } = useBoardsContext();
 
   const handleOnSubmitDescription = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const TaskDescriptionForm = ({
       return;
     }
 
-    updateDescription(task.id, taskDescription);
+    updateTaskDescription(task.id, taskDescription);
     cancelEditing();
   };
 

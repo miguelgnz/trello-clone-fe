@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Layout from '@/components/Layout';
 import { ThemeContextProvider } from '@/context/ThemeContext';
-import { TasksContextProvider } from '@/context/TasksContext';
-import { ColumnsContextProvider } from '@/context/ColumnsContext';
+import { BoardsContextProvider } from '@/context/BoardsContext';
 import { NextUIProvider } from '@nextui-org/react';
 
 // const geistSans = localFont({
@@ -19,7 +18,8 @@ import { NextUIProvider } from '@nextui-org/react';
 
 export const metadata: Metadata = {
   title: 'Trello Clone',
-  description: 'A Trello clone built with Next.js, NextUI, Tailwind CSS, and React DnD.',
+  description:
+    'A Trello clone built with Next.js, NextUI, Tailwind CSS, and React DnD.',
 };
 
 export default function RootLayout({
@@ -31,13 +31,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gradient-to-r from-pink-500 to-yellow-500">
         <ThemeContextProvider>
-          <ColumnsContextProvider>
-            <TasksContextProvider>
-              <NextUIProvider>
-                <Layout>{children}</Layout>
-              </NextUIProvider>
-            </TasksContextProvider>
-          </ColumnsContextProvider>
+          <BoardsContextProvider>
+            <NextUIProvider>
+              <Layout>{children}</Layout>
+            </NextUIProvider>
+          </BoardsContextProvider>
         </ThemeContextProvider>
       </body>
     </html>

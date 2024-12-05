@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button, Textarea } from '@nextui-org/react';
-import { useTasksContext } from '@/context/TasksContext';
+import { useBoardsContext } from '@/context/BoardsContext';
 import { TaskType } from '@/utils/types';
 import { constants } from '@/utils/constants';
 
@@ -15,7 +15,7 @@ export default function TaskTitleForm({
   cancelEditing,
   task,
 }: TaskTitleFormProps) {
-  const { updateTitle } = useTasksContext();
+  const { updateTaskTitle } = useBoardsContext();
   const [title, setTitle] = useState<string>(task.title || '');
 
   const { customModalInputClasses } = constants;
@@ -28,7 +28,7 @@ export default function TaskTitleForm({
       return;
     }
 
-    updateTitle(task.id, title);
+    updateTaskTitle(task.id, title);
     cancelEditing();
   };
 

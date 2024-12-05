@@ -13,7 +13,7 @@ import {
 import AddTaskForm from './AddTaskForm';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FaPlus } from 'react-icons/fa';
-import { useColumnsContext } from '@/context/ColumnsContext';
+import { useBoardsContext } from '@/context/BoardsContext';
 
 interface ColumnProps {
   tasks: TaskType[];
@@ -26,7 +26,7 @@ export default function Column({ column, tasks }: ColumnProps) {
   });
   const [isInputVisible, setIsInputVisible] = useState(false);
 
-  const { deleteColumn } = useColumnsContext();
+  const { deleteColumn } = useBoardsContext();
 
   return (
     <div
