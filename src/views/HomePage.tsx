@@ -32,50 +32,54 @@ export default function HomePage() {
   return (
     <div className="flex flex-row">
       <div
-        className={`fixed top-16 left-0 h-full bg-task p-4 transition-transform duration-300 ${
-          isSideMenuOpen ? 'translate-x-0' : '-translate-x-[calc(100%-20px)]'
+        className={`fixed w-64 top-16 left-0 h-full z-10 bg-task  transition-transform duration-300 ${
+          isSideMenuOpen ? 'translate-x-0' : '-translate-x-[calc(100%-12px)]'
         }`}
-        style={{ width: '250px' }}
       >
         <Button
           isIconOnly
           variant="solid"
           radius="full"
           size="sm"
-          className="absolute top-16 right-[-16px] p-2 bg-task border-[0.5px] font-bold"
+          className="absolute top-6 right-[-16px] p-2 bg-task font-bold border border-[#b6c2cf9c]"
           onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
         >
           {isSideMenuOpen ? (
-            <IoChevronBack className="text-white" />
+            <IoChevronBack className="text-white" size={12} />
           ) : (
-            <IoChevronForward className="text-white" />
+            <IoChevronForward className="text-white" size={12} />
           )}
         </Button>
         {/* Side menu content */}
-        <div>
-          <p>Your Boards</p>
-          <ul>List of boards</ul>
-          {boards.map((board) => {
-            return (
-              <li key={board.id} className="flex flex-row items-center gap-2">
+        <div className="flex flex-col gap-4">
+          <p className="text-taskText font-bold p-4">Your Boards</p>
+          <div className="flex flex-col">
+            {boards.map((board) => {
+              return (
                 <Button
+                  key={board.id}
+                  className={`text-taskText w-full rounded-none justify-start text-sm ${
+                    selectedBoard.id === board.id ? 'bg-[#ffffff3d]' : ''
+                  }`}
                   variant="light"
                   size="sm"
                   onClick={() => {
                     onChangeSelectedBoard(board.id);
+                    setIsSideMenuOpen(false);
                   }}
                 >
                   {board.title}
                 </Button>
-              </li>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
-      {/* Main content */}
+
+
       <div
-        className={`gap-4 p-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[280px] transition-all duration-300 ${
-          isSideMenuOpen ? 'ml-[290px]' : 'ml-[32px]'
+        className={`gap-4 pt-4 pr-4 pb-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[280px] z-0 transition-all duration-300 ${
+          isSideMenuOpen ? 'pl-[276px]' : 'pl-10'
         }`}
         id="main-grid"
       >
