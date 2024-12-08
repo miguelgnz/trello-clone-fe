@@ -3,16 +3,24 @@
 import { useState } from 'react';
 import Column from '@/components/Column';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import { Button } from '@nextui-org/react';
-import { FaPlus } from 'react-icons/fa';
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@nextui-org/react';
 import AddColumnForm from '@/components/AddColumnForm';
+import AddBoardForm from '@/components/AddBoardForm';
 import { TaskType } from '@/utils/types';
-import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import { useBoardsContext } from '@/context/BoardsContext';
+import { FaPlus } from 'react-icons/fa';
+import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 
 export default function HomePage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+
+  const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
   const { boards, selectedBoard, setTaskOnDragEvent, onChangeSelectedBoard } =
     useBoardsContext();
@@ -41,7 +49,7 @@ export default function HomePage() {
           variant="solid"
           radius="full"
           size="sm"
-          className="absolute top-6 right-[-16px] p-2 bg-task font-bold border border-[#b6c2cf9c]"
+          className="absolute top-3 right-[-16px] p-2 bg-task font-bold border border-[#b6c2cf9c]"
           onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
         >
           {isSideMenuOpen ? (
@@ -51,8 +59,35 @@ export default function HomePage() {
           )}
         </Button>
         {/* Side menu content */}
-        <div className="flex flex-col gap-4">
-          <p className="text-taskText font-bold p-4">Your Boards</p>
+        <div className="flex flex-col gap-2 pt-10">
+          <div className="flex flex-row justify-between items-center pl-2 pr-2">
+            <p className="text-taskText font-bold">Your Boards</p>
+            <Popover
+              backdrop="blur"
+              isOpen={isPopoverOpen}
+              onOpenChange={() => setIsPopoverOpen(false)}
+            >
+              <PopoverTrigger>
+                <Button
+                  isIconOnly
+                  variant="light"
+                  className="text-white"
+                  onClick={() => {
+                    setIsPopoverOpen(!isPopoverOpen);
+                  }}
+                >
+                  <FaPlus size={14} />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="bg-column p-6 w-72">
+                <AddBoardForm
+                  closePopover={() => {
+                    setIsPopoverOpen(false);
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
           <div className="flex flex-col">
             {boards.map((board) => {
               return (
@@ -75,7 +110,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-
 
       <div
         className={`gap-4 pt-4 pr-4 pb-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[280px] z-0 transition-all duration-300 ${

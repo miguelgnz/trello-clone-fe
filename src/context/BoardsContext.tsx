@@ -21,6 +21,7 @@ interface BoardsContextType {
   updateTaskDescription: (taskId: string, newDescription: string) => void;
   addColumn: (newColumn: ColumnType) => void;
   deleteColumn: (columnId: string) => void;
+  addBoard: (boardTitle: string) => void;
 }
 
 const ctx: BoardsContextType = {
@@ -39,6 +40,7 @@ const ctx: BoardsContextType = {
   updateTaskDescription: () => {},
   addColumn: () => {},
   deleteColumn: () => {},
+  addBoard: () => {},
 };
 
 const BoardsContext = createContext(ctx);
@@ -220,6 +222,20 @@ export const BoardsContextProvider = ({
     setSelectedBoard(board);
   };
 
+  const addBoard = (boardTitle: string) => {
+    setBoards((prevState) => {
+      return [
+        ...prevState,
+        {
+          id: Math.random().toString(36).substr(2, 9),
+          title: boardTitle,
+          columns: INITIAL_COLUMNS,
+          tasks: [],
+        },
+      ];
+    });
+  };
+
   const value = {
     boards,
     selectedBoard,
@@ -231,6 +247,7 @@ export const BoardsContextProvider = ({
     updateTaskDescription,
     addColumn,
     deleteColumn,
+    addBoard,
   };
 
   return (
