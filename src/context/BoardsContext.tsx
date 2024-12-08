@@ -92,8 +92,24 @@ export const BoardsContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [boards, setBoards] = useState<Board[]>(INITIAL_BOARDS);
+  const [boards, setBoards] = useState<Board[]>(() => { 
+    const boardsFromLocalStorage = localStorage.getItem('boards');
+    return boardsFromLocalStorage ? JSON.parse(boardsFromLocalStorage) : INITIAL_BOARDS;
+   });
   const [selectedBoard, setSelectedBoard] = useState<Board>(boards[0]);
+
+  // Save the boards to localStorage
+  useEffect(() => {
+    localStorage.setItem('boards', JSON.stringify(boards));
+  }, [boards]);
+
+  // Load the boards from localStorage
+  useEffect(() => {
+    const boardsFromLocalStorage = localStorage.getItem('boards');
+    if (boardsFromLocalStorage) {
+      setBoards(JSON.parse(boardsFromLocalStorage));
+    }
+  }, []);
 
   // Update the selectedBoard when the boards change
   useEffect(() => {
