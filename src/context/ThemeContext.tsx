@@ -25,10 +25,31 @@ export const ThemeContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [darkMode, setDarkMode] = useState(false);
-  const [background, setBackground] = useState<Background>({
-    id: 'bg-1',
-    color: 'bg-gradient-to-r from-pink-500 to-yellow-500',
+  const [background, setBackground] = useState<Background>(() => {
+    return {
+      id: 'bg-1',
+      color: 'bg-white',
+    };
   });
+
+  //Get selected background color from local storage
+  useEffect(() => {
+    const background = localStorage.getItem('background');
+    if (background) {
+      setBackground(JSON.parse(background));
+    }
+  }, []);
+
+  //Set selected background color on local storage using debounce
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      localStorage.setItem('background', JSON.stringify(background));
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [background]);
 
   useEffect(() => {
     document.body.className = background.color;

@@ -13,6 +13,7 @@ import { Board } from '@/utils/types';
 interface BoardsContextType {
   boards: Board[];
   selectedBoard: Board;
+  boardsLoading: boolean;
   onChangeSelectedBoard: (boardId: string) => void;
   setTaskOnDragEvent: (taskId: string, newStatus: TaskStatus) => void;
   addTask: (newTask: TaskType) => void;
@@ -32,6 +33,7 @@ const ctx: BoardsContextType = {
     columns: [],
     tasks: [],
   },
+  boardsLoading: true,
   onChangeSelectedBoard: () => {},
   setTaskOnDragEvent: () => {},
   addTask: () => {},
@@ -61,29 +63,7 @@ const INITIAL_BOARDS: Board[] = [
     id: '1',
     title: 'Board 1',
     columns: INITIAL_COLUMNS,
-    tasks: [
-      {
-        id: 'abc123',
-        title: 'Task 1',
-        description: 'Task 1 description',
-        status: 'TODO',
-        priority: 'LOW',
-      },
-    ],
-  },
-  {
-    id: '2',
-    title: 'Board 2',
-    columns: INITIAL_COLUMNS,
-    tasks: [
-      {
-        id: 'def456',
-        title: 'Task 2',
-        description: 'Task 2 description',
-        status: 'IN_PROGRESS',
-        priority: 'MEDIUM',
-      },
-    ],
+    tasks: [],
   },
 ];
 
@@ -92,23 +72,33 @@ export const BoardsContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [boards, setBoards] = useState<Board[]>(() => { 
-    const boardsFromLocalStorage = localStorage.getItem('boards');
-    return boardsFromLocalStorage ? JSON.parse(boardsFromLocalStorage) : INITIAL_BOARDS;
-   });
+  const [boards, setBoards] = useState<Board[]>(() => {
+    return INITIAL_BOARDS;
+  });
+
   const [selectedBoard, setSelectedBoard] = useState<Board>(boards[0]);
+  const [boardsLoading, setBoardsLoading] = useState<boolean>(true);
 
   // Save the boards to localStorage
   useEffect(() => {
-    localStorage.setItem('boards', JSON.stringify(boards));
+    const handler = setTimeout(() => {
+      localStorage.setItem('boards', JSON.stringify(boards));
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
   }, [boards]);
 
   // Load the boards from localStorage
   useEffect(() => {
     const boardsFromLocalStorage = localStorage.getItem('boards');
+
     if (boardsFromLocalStorage) {
       setBoards(JSON.parse(boardsFromLocalStorage));
     }
+
+    setBoardsLoading(false);
   }, []);
 
   // Update the selectedBoard when the boards change
@@ -255,6 +245,7 @@ export const BoardsContextProvider = ({
   const value = {
     boards,
     selectedBoard,
+    boardsLoading,
     setTaskOnDragEvent,
     onChangeSelectedBoard,
     addTask,

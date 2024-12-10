@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-r from-pink-500 to-yellow-500">
+      <body className="bg-white">
         <ThemeContextProvider>
           <BoardsContextProvider>
             <NextUIProvider>

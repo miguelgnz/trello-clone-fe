@@ -15,6 +15,7 @@ import { TaskType } from '@/utils/types';
 import { useBoardsContext } from '@/context/BoardsContext';
 import { FaPlus } from 'react-icons/fa';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import Spinner from '@/components/Spinner';
 
 export default function HomePage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -22,8 +23,13 @@ export default function HomePage() {
 
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
-  const { boards, selectedBoard, setTaskOnDragEvent, onChangeSelectedBoard } =
-    useBoardsContext();
+  const {
+    boards,
+    selectedBoard,
+    boardsLoading,
+    setTaskOnDragEvent,
+    onChangeSelectedBoard,
+  } = useBoardsContext();
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -117,32 +123,38 @@ export default function HomePage() {
         }`}
         id="main-grid"
       >
-        <DndContext onDragEnd={handleDragEnd}>
-          {selectedBoard.columns.map((column) => {
-            return (
-              <Column
-                key={column.id}
-                column={column}
-                tasks={selectedBoard.tasks.filter(
-                  (task) => task.status === column.id
-                )}
-              />
-            );
-          })}
-        </DndContext>
-        {isFormOpen ? (
-          <>
-            <AddColumnForm setIsFormOpen={setIsFormOpen} />
-          </>
+        {boardsLoading ? (
+          <Spinner />
         ) : (
-          <Button
-            className="bg-[#ffffff3d] text-white font-medium"
-            startContent={<FaPlus />}
-            variant="light"
-            onClick={() => setIsFormOpen(true)}
-          >
-            Add another column
-          </Button>
+          <>
+            <DndContext onDragEnd={handleDragEnd}>
+              {selectedBoard.columns.map((column) => {
+                return (
+                  <Column
+                    key={column.id}
+                    column={column}
+                    tasks={selectedBoard.tasks.filter(
+                      (task) => task.status === column.id
+                    )}
+                  />
+                );
+              })}
+            </DndContext>
+            {isFormOpen ? (
+              <>
+                <AddColumnForm setIsFormOpen={setIsFormOpen} />
+              </>
+            ) : (
+              <Button
+                className="bg-[#ffffff3d] text-white font-medium"
+                startContent={<FaPlus />}
+                variant="light"
+                onClick={() => setIsFormOpen(true)}
+              >
+                Add another column
+              </Button>
+            )}
+          </>
         )}
       </div>
     </div>
