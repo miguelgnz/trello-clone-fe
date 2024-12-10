@@ -21,6 +21,7 @@ export const theme = {
       secondaryBtn: '#0c66e4',
       modal: '#31393f',
       modalInput: '#22272b',
+      tooltip: '#e4e4e4', 
     },
   },
 };

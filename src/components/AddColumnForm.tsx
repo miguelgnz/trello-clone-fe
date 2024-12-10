@@ -5,7 +5,7 @@ import { constants } from '@/utils/constants';
 import { Button, Input } from '@nextui-org/react';
 import { MdOutlineClose } from 'react-icons/md';
 import { ColumnType } from '@/utils/types';
-import { useColumnsContext } from '@/context/ColumnsContext';
+import { useBoardsContext } from '@/context/BoardsContext';
 
 interface AddColumnFormProps {
   setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,14 +16,14 @@ const AddColumnForm = ({ setIsFormOpen }: AddColumnFormProps) => {
 
   const [newColumnTitle, setNewColumnTitle] = useState('');
 
-  const { addColumn, columns } = useColumnsContext();
+  const { addColumn, selectedBoard } = useBoardsContext();
 
   const handleAddColumn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!newColumnTitle) return;
 
-    const columnExists = columns.some(
+    const columnExists = selectedBoard.columns.some(
       (column) => column.id === newColumnTitle.toUpperCase()
     );
 

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button, Input } from '@nextui-org/react';
 import { MdOutlineClose } from 'react-icons/md';
 import { ColumnType, TaskType } from '@/utils/types';
-import { useTasksContext } from '@/context/TasksContext';
+import { useBoardsContext } from '@/context/BoardsContext';
 import { constants } from '@/utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,7 +21,7 @@ export default function AddTaskForm({
 
   const { customInputClasses } = constants;
 
-  const { addTask } = useTasksContext();
+  const { addTask } = useBoardsContext();
 
   const onClickAddCard = () => {
     const newTask: TaskType = {

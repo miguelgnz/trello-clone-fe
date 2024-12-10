@@ -1,5 +1,11 @@
 export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE' | string;
 
+export interface Background {
+  id: string;
+  color: string;
+  emoji?: string;
+}
+
 export interface TaskType {
   id: string;
   title: string;
@@ -13,8 +19,9 @@ export interface ColumnType {
   title: string;
 }
 
-export interface Background {
+export interface Board {
   id: string;
-  color: string;
-  emoji?: string;
+  title: string;
+  columns: ColumnType[];
+  tasks: TaskType[];
 }
