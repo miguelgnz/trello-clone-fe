@@ -28,7 +28,8 @@ export const ThemeContextProvider = ({
   const [background, setBackground] = useState<Background>(() => {
     return {
       id: 'bg-1',
-      color: 'bg-white',
+      color: 'bg-gradient-to-r from-pink-500 to-yellow-500',
+      emoji: '🌅',
     };
   });
 
