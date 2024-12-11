@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { Button } from '@nextui-org/react';
-import AddColumnForm from '@/components/AddColumnForm';
-import Column from '@/components/Column';
 import { useBoardsContext } from '@/context/BoardsContext';
 import { FaPlus } from 'react-icons/fa';
-import Spinner from '@/components/Spinner';
 import { TaskType } from '@/utils/types';
+
+import Column from '@/components/Column';
+import AddColumnForm from '@/components/AddColumnForm';
+import Spinner from '@/components/Spinner';
+import BoardTitleForm from './BoardTitleForm';
 
 interface ColumnsGridProps {
   isSideMenuOpen: boolean;
 }
 
-export function ColumnsGrid({ isSideMenuOpen }: ColumnsGridProps) {
+export default function ColumnsGrid({ isSideMenuOpen }: ColumnsGridProps) {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isBoardTitleFormOpen, setIsBoardTitleFormOpen] = useState(false);
+
   const { selectedBoard, boardsLoading, setTaskOnDragEvent } =
     useBoardsContext();
 
@@ -40,9 +44,19 @@ export function ColumnsGrid({ isSideMenuOpen }: ColumnsGridProps) {
         <Spinner />
       ) : (
         <>
-          <h1 className="sm:text-3xl text-medium font-bold text-white ">
-            {selectedBoard.title}
-          </h1>
+
+          {isBoardTitleFormOpen ? (
+            <BoardTitleForm closeForm={() => setIsBoardTitleFormOpen(false)}/>
+          ) : (
+            <h1
+              className="sm:text-3xl text-medium font-bold text-white "
+              onClick={() => {
+                setIsBoardTitleFormOpen(true);
+              }}
+            >
+              {selectedBoard.title}
+            </h1>
+          )}
 
           <div className="gap-4 pt-4 pr-4 pb-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[280px] z-0">
             <DndContext onDragEnd={handleDragEnd}>

@@ -23,6 +23,7 @@ interface BoardsContextType {
   addColumn: (newColumn: ColumnType) => void;
   deleteColumn: (columnId: string) => void;
   addBoard: (boardTitle: string) => void;
+  editBoardTitle: (newTitle: string) => void;
 }
 
 const ctx: BoardsContextType = {
@@ -43,6 +44,7 @@ const ctx: BoardsContextType = {
   addColumn: () => {},
   deleteColumn: () => {},
   addBoard: () => {},
+  editBoardTitle: () => {},
 };
 
 const BoardsContext = createContext(ctx);
@@ -242,6 +244,14 @@ export const BoardsContextProvider = ({
     });
   };
 
+  const editBoardTitle = (newTitle: string) => {
+    setBoards((prevState) => {
+      return prevState.map((board) =>
+        board.id === selectedBoard.id ? { ...board, title: newTitle } : board
+      );
+    });
+  };
+
   const value = {
     boards,
     selectedBoard,
@@ -255,6 +265,7 @@ export const BoardsContextProvider = ({
     addColumn,
     deleteColumn,
     addBoard,
+    editBoardTitle,
   };
 
   return (

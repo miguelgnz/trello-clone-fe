@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import SideMenu from '@/components/SideMenu';
-import { ColumnsGrid } from '@/components/ColumnsGrid';
+import ColumnsGrid from '@/components/ColumnsGrid';
 
 export default function HomePage() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
