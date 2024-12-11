@@ -82,7 +82,7 @@ export default function SideMenu({
             return (
               <div
                 key={board.id}
-                className={`flex flex-row items-center justify-between pl-2 pr-2 cursor-pointer text-taskText text-sm w-full hover:bg-[#ffffff3d] ${
+                className={`flex flex-row items-center justify-between h-8 pl-2 pr-2 cursor-pointer text-taskText text-sm w-full hover:bg-[#ffffff3d] ${
                   selectedBoard.id === board.id ? 'bg-[#ffffff3d]' : ''
                 }`}
                 onClick={() => {
@@ -90,7 +90,11 @@ export default function SideMenu({
                   setIsSideMenuOpen(false);
                 }}
               >
-                <span>{board.title}</span>
+                <span>
+                  {board.title.length > 24
+                    ? board.title.slice(0, 20) + '...'
+                    : board.title}
+                </span>
 
                 <Popover backdrop="opaque">
                   <PopoverTrigger>
