@@ -46,7 +46,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-row">
       <div
-        className={`fixed w-64 top-16 left-0 h-full z-10 bg-task  transition-transform duration-300 ${
+        className={`absolute w-64 top-16 left-0 h-[calc(100%_-_64px)] z-10 bg-task  transition-transform duration-300 ${
           isSideMenuOpen ? 'translate-x-0' : '-translate-x-[calc(100%-12px)]'
         }`}
       >
@@ -118,7 +118,7 @@ export default function HomePage() {
       </div>
 
       <div
-        className={`gap-4 pt-4 pr-4 pb-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[280px] z-0 transition-all duration-300 ${
+        className={`flex flex-col pt-6 gap-6 min-w-full overflow-x-auto transition-all duration-300 ${
           isSideMenuOpen ? 'pl-[276px]' : 'pl-10'
         }`}
         id="main-grid"
@@ -127,33 +127,39 @@ export default function HomePage() {
           <Spinner />
         ) : (
           <>
-            <DndContext onDragEnd={handleDragEnd}>
-              {selectedBoard.columns.map((column) => {
-                return (
-                  <Column
-                    key={column.id}
-                    column={column}
-                    tasks={selectedBoard.tasks.filter(
-                      (task) => task.status === column.id
-                    )}
-                  />
-                );
-              })}
-            </DndContext>
-            {isFormOpen ? (
-              <>
-                <AddColumnForm setIsFormOpen={setIsFormOpen} />
-              </>
-            ) : (
-              <Button
-                className="bg-[#ffffff3d] text-white font-medium"
-                startContent={<FaPlus />}
-                variant="light"
-                onClick={() => setIsFormOpen(true)}
-              >
-                Add another column
-              </Button>
-            )}
+            <h1 className="sm:text-3xl text-medium font-bold text-white ">
+              {selectedBoard.title}
+            </h1>
+
+            <div className="gap-4 pt-4 pr-4 pb-4 min-w-full overflow-x-auto grid grid-flow-col auto-cols-[280px] z-0">
+              <DndContext onDragEnd={handleDragEnd}>
+                {selectedBoard.columns.map((column) => {
+                  return (
+                    <Column
+                      key={column.id}
+                      column={column}
+                      tasks={selectedBoard.tasks.filter(
+                        (task) => task.status === column.id
+                      )}
+                    />
+                  );
+                })}
+              </DndContext>
+              {isFormOpen ? (
+                <>
+                  <AddColumnForm setIsFormOpen={setIsFormOpen} />
+                </>
+              ) : (
+                <Button
+                  className="bg-[#ffffff3d] text-white font-medium"
+                  startContent={<FaPlus />}
+                  variant="light"
+                  onClick={() => setIsFormOpen(true)}
+                >
+                  Add another column
+                </Button>
+              )}
+            </div>
           </>
         )}
       </div>
