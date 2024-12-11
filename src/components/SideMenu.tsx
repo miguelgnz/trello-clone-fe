@@ -9,9 +9,9 @@ import {
 } from '@nextui-org/react';
 import AddBoardForm from '@/components/AddBoardForm';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FaPlus } from 'react-icons/fa';
 import { useBoardsContext } from '@/context/BoardsContext';
-
 
 interface SideMenuProps {
   isSideMenuOpen: boolean;
@@ -24,7 +24,8 @@ export default function SideMenu({
 }: SideMenuProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
-  const { boards, selectedBoard, onChangeSelectedBoard } = useBoardsContext();
+  const { boards, selectedBoard, onChangeSelectedBoard, deleteBoard } =
+    useBoardsContext();
 
   return (
     <div
@@ -79,20 +80,42 @@ export default function SideMenu({
         <div className="flex flex-col">
           {boards.map((board) => {
             return (
-              <Button
+              <div
                 key={board.id}
-                className={`text-taskText w-full rounded-none justify-start text-sm ${
+                className={`flex flex-row items-center justify-between pl-2 pr-2 cursor-pointer text-taskText text-sm w-full hover:bg-[#ffffff3d] ${
                   selectedBoard.id === board.id ? 'bg-[#ffffff3d]' : ''
                 }`}
-                variant="light"
-                size="sm"
                 onClick={() => {
                   onChangeSelectedBoard(board.id);
                   setIsSideMenuOpen(false);
                 }}
               >
-                {board.title}
-              </Button>
+                <span>{board.title}</span>
+
+                <Popover backdrop="opaque">
+                  <PopoverTrigger>
+                    <Button
+                      isIconOnly
+                      variant="light"
+                      size="sm"
+                      className="text-white"
+                    >
+                      <HiOutlineDotsHorizontal size={14} />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="bg-column p-4">
+                    <Button
+                      color="danger"
+                      variant="light"
+                      onClick={() => {
+                        deleteBoard(board.id);
+                      }}
+                    >
+                      Delete Board
+                    </Button>
+                  </PopoverContent>
+                </Popover>
+              </div>
             );
           })}
         </div>
