@@ -29,11 +29,13 @@ export default function SideMenu({
 
   return (
     <div
+      data-testid="side-menu"
       className={`absolute w-64 top-16 left-0 h-[calc(100%_-_64px)] z-10 bg-task  transition-transform duration-300 ${
         isSideMenuOpen ? 'translate-x-0' : '-translate-x-[calc(100%-12px)]'
       }`}
     >
       <Button
+        data-testid="side-menu-toggle"
         isIconOnly
         variant="solid"
         radius="full"

@@ -35,6 +35,7 @@ export default function ColumnsGrid({ isSideMenuOpen }: ColumnsGridProps) {
 
   return (
     <div
+      data-testid="columns-grid"
       className={`flex flex-col pt-6 gap-6 min-w-full overflow-x-auto transition-all duration-300 ${
         isSideMenuOpen ? 'pl-[276px]' : 'pl-10'
       }`}
@@ -44,9 +45,8 @@ export default function ColumnsGrid({ isSideMenuOpen }: ColumnsGridProps) {
         <Spinner />
       ) : (
         <>
-
           {isBoardTitleFormOpen ? (
-            <BoardTitleForm closeForm={() => setIsBoardTitleFormOpen(false)}/>
+            <BoardTitleForm closeForm={() => setIsBoardTitleFormOpen(false)} />
           ) : (
             <h1
               className="sm:text-3xl text-medium font-bold text-white "
